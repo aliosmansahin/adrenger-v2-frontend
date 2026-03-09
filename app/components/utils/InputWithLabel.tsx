@@ -4,6 +4,8 @@ import InputField from "./InputField";
 interface InputProps {
   type: HTMLInputTypeAttribute;
   label: string;
+  inputClassName?: string | undefined;
+  labelClassName?: string | undefined;
   name: string;
   id: string;
   value?: string | undefined;
@@ -13,6 +15,8 @@ interface InputProps {
 function InputWithLabel({
   type,
   label,
+  inputClassName,
+  labelClassName,
   name,
   id,
   value,
@@ -20,10 +24,13 @@ function InputWithLabel({
 }: InputProps) {
   return (
     <>
-      <label htmlFor={id}>{label}</label>
+      <label className={labelClassName} htmlFor={id}>
+        {label}
+      </label>
       <InputField
         type={type}
         id={id}
+        className={inputClassName}
         name={name}
         value={value}
         onChange={onChange}

@@ -3,7 +3,11 @@
 import Button from "../utils/Button";
 
 function LoginButton() {
-  return <Button onClick={() => {}}>Login</Button>;
+  return (
+    <Button type="submit" onClick={() => {}}>
+      LOGIN
+    </Button>
+  );
 }
 
 export default LoginButton;
