@@ -24,7 +24,10 @@ function InputWithLabel({
 }: InputProps) {
   return (
     <>
-      <label className={labelClassName} htmlFor={id}>
+      <label
+        className={`hover:text-blue-500 hover:cursor-pointer ${labelClassName}`}
+        htmlFor={id}
+      >
         {label}
       </label>
       <InputField
