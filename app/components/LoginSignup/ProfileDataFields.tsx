@@ -9,6 +9,7 @@ function ProfileDataFields() {
         name="nickname"
         placeholder="Enter a nickname you want to use"
         type="text"
+        required
       />
       <InputWithLabel
         id="bio-input"

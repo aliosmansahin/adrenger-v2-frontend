@@ -10,6 +10,7 @@ function EmailAndPassword() {
         name="email"
         id="email-input"
         placeholder="Enter your email"
+        required
       />
       <InputWithLabel
         type="password"
@@ -17,6 +18,7 @@ function EmailAndPassword() {
         name="password"
         id="password-input"
         placeholder="Enter your password"
+        required
       />
     </>
   );
