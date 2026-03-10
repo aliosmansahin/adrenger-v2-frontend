@@ -1,6 +1,7 @@
 import EmailAndPassword from "./EmailAndPassword";
 import RememberMe from "./RememberMe";
 import LoginButton from "../Login/LoginButton";
+import UnfilledLink from "../utils/UnfilledLink";
 
 function LoginContainer() {
   return (
@@ -14,6 +15,9 @@ function LoginContainer() {
           </section>
           <section className="flex flex-col gap-3 pt-3 text-[19px]">
             <LoginButton />
+          </section>
+          <section className="text-center text-[18px]">
+            <UnfilledLink href="/signup">Sign Up</UnfilledLink>
           </section>
         </main>
       </form>
