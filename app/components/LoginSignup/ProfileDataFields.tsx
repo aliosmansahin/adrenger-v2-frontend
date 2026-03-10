@@ -7,9 +7,16 @@ function ProfileDataFields() {
         id="nickname-input"
         label="Nickname"
         name="nickname"
+        placeholder="Enter a nickname you want to use"
         type="text"
       />
-      <InputWithLabel id="bio-input" label="Bio*" name="bio" type="text" />
+      <InputWithLabel
+        id="bio-input"
+        label="Bio*"
+        name="bio"
+        type="text"
+        placeholder="Enter your bio"
+      />
     </>
   );
 }

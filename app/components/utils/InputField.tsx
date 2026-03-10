@@ -6,6 +6,7 @@ interface InputProps {
   type: HTMLInputTypeAttribute;
   name: string;
   className: string | undefined;
+  placeholder?: string | undefined;
   id: string;
   value?: string | undefined;
   onChange?(): ChangeEventHandler;
@@ -16,6 +17,7 @@ function InputField({
   name,
   className,
   id,
+  placeholder,
   value,
   onChange,
 }: InputProps) {
@@ -24,6 +26,7 @@ function InputField({
       type={type}
       id={id}
       name={name}
+      placeholder={placeholder}
       className={`bg-white text-black rounded-3xl px-3 py-2 ${className}`}
       value={value}
       onChange={onChange}
