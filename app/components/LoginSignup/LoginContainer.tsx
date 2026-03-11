@@ -23,7 +23,7 @@ function LoginContainer() {
             <RememberMe />
           </section>
           <section className="flex flex-col gap-3 pt-3 text-[19px]">
-            <LoginButton />
+            <LoginButton disabled={pending} />
           </section>
           <section className="text-center text-[18px]">
             <UnfilledLink href="/signup">Sign Up</UnfilledLink>
