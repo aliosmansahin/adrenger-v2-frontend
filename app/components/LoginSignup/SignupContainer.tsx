@@ -39,7 +39,7 @@ function SignupContainer() {
             <RememberMe />
           </section>
           <section className="flex flex-col gap-3 pt-3 text-[19px]">
-            <SignupButton />
+            <SignupButton disabled={pending} />
           </section>
           {!pending && !state?.success && (
             <section>
