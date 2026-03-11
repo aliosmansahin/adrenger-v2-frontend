@@ -38,9 +38,9 @@ function LoginContainer() {
           <section className="flex flex-col gap-3 pt-3 text-[19px]">
             <LoginButton disabled={pending} />
           </section>
-          {!pending && !state.success && (
+          {!pending && !state?.success && (
             <section>
-              <ErrorMessage message={state.message} />
+              <ErrorMessage message={state?.message} />
             </section>
           )}
           <section className="text-center text-[18px]">
