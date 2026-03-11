@@ -53,3 +53,11 @@ export async function login(initialState: any, formData: FormData) {
     redirect("/");
 
 }
+
+export async function signup(initialState: any, formData: FormData) {
+    //TODO: Implement signup logic
+    return {
+        message: "test",
+        success: true,
+    }
+}
