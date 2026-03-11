@@ -7,6 +7,7 @@ import UnfilledLink from "../utils/UnfilledLink";
 import ProfileDataFields from "./ProfileDataFields";
 import { startTransition, useActionState } from "react";
 import { signup } from "@/app/actions";
+import ErrorMessage from "../utils/ErrorMessage";
 
 function SignupContainer() {
   const initialState = {
@@ -40,6 +41,11 @@ function SignupContainer() {
           <section className="flex flex-col gap-3 pt-3 text-[19px]">
             <SignupButton />
           </section>
+          {!pending && !state?.success && (
+            <section>
+              <ErrorMessage message={state?.message} />
+            </section>
+          )}
           <section className="text-center text-[18px]">
             <UnfilledLink href="/login">Login</UnfilledLink>
           </section>
