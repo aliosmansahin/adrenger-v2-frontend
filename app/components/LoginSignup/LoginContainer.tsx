@@ -6,6 +6,7 @@ import LoginButton from "../Login/LoginButton";
 import UnfilledLink from "../utils/UnfilledLink";
 import { login } from "@/app/actions";
 import { useActionState } from "react";
+import ErrorMessage from "../utils/ErrorMessage";
 
 function LoginContainer() {
   const initialState = {
@@ -25,6 +26,11 @@ function LoginContainer() {
           <section className="flex flex-col gap-3 pt-3 text-[19px]">
             <LoginButton disabled={pending} />
           </section>
+          {state?.message && (
+            <section>
+              <ErrorMessage message={state.message} />
+            </section>
+          )}
           <section className="text-center text-[18px]">
             <UnfilledLink href="/signup">Sign Up</UnfilledLink>
           </section>
