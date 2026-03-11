@@ -1,20 +1,12 @@
-"use client";
+import { ComponentPropsWithoutRef } from "react";
 
-import { MouseEventHandler, ReactNode } from "react";
+interface ButtonProps extends ComponentPropsWithoutRef<"button"> {}
 
-interface ButtonProps {
-  children: ReactNode;
-  type?: "submit" | "reset" | "button" | undefined;
-  className?: string | undefined;
-  onClick: MouseEventHandler;
-}
-
-function Button({ children, className, type, onClick }: ButtonProps) {
+function Button({ children, className, ...props }: ButtonProps) {
   return (
     <button
       className={`bg-blue-500 hover:bg-blue-600 focus:bg-blue-800 hover:cursor-pointer rounded-3xl py-1 ${className}`}
-      type={type}
-      onClick={onClick}
+      {...props}
     >
       {children}
     </button>

@@ -1,13 +1,7 @@
-"use client";
-
 import Button from "../utils/Button";
 
 function LoginButton() {
-  return (
-    <Button type="submit" onClick={() => {}}>
-      LOGIN
-    </Button>
-  );
+  return <Button type="submit">LOGIN</Button>;
 }
 
 export default LoginButton;
