@@ -58,7 +58,7 @@ function TokenProvider({ children }: { children: ReactNode }) {
     );
 
     return () => api.interceptors.response.eject(interceptor);
-  }, [router]);
+  }, []);
 
   return <>{children}</>;
 }
