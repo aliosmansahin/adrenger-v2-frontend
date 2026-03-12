@@ -1,8 +1,8 @@
 "use server";
 
-import axios from "axios";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { api } from "./lib/axios";
 
 export async function login(initialState: any, formData: FormData) {
     const rawFormData = {
@@ -12,7 +12,7 @@ export async function login(initialState: any, formData: FormData) {
     }
 
     try {
-        const res = await axios.post(`${process.env.BACKEND_URL}/auth/login`, rawFormData, {withCredentials: true});
+        const res = await api.post(`/auth/login`, rawFormData);
 
         const cookieStore = await cookies();
         
@@ -64,7 +64,7 @@ export async function signup(initialState: any, formData: FormData) {
     };
 
     try {
-        const res = await axios.post(`${process.env.BACKEND_URL}/auth/register`, rawFormData, {withCredentials: true});
+        const res = await api.post(`/auth/register`, rawFormData);
 
         const cookieStore = await cookies();
 
