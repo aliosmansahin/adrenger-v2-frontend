@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "../globals.css";
 import ContainerWithChats from "../components/ContainerWithChats";
 import Container from "../components/Container";
+import TokenProvider from "../components/Auth/TokenProvider";
 
 export const metadata: Metadata = {
   title: "adrenger by adrendev",
@@ -16,9 +17,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased`}>
-        <Container>
-          <ContainerWithChats>{children}</ContainerWithChats>
-        </Container>
+        <TokenProvider>
+          <Container>
+            <ContainerWithChats>{children}</ContainerWithChats>
+          </Container>
+        </TokenProvider>
       </body>
     </html>
   );

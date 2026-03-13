@@ -1,10 +1,12 @@
-"use client";
-
 import Button from "../utils/Button";
 
-function LoginButton() {
+interface ButtonProps {
+  disabled?: boolean;
+}
+
+function LoginButton({ disabled = false }: ButtonProps) {
   return (
-    <Button type="submit" onClick={() => {}}>
+    <Button type="submit" disabled={disabled}>
       LOGIN
     </Button>
   );
