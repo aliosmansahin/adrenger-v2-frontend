@@ -3,6 +3,7 @@ import "../globals.css";
 import ContainerWithChats from "../components/ContainerWithChats";
 import Container from "../components/Container";
 import TokenProvider from "../components/Auth/TokenProvider";
+import QueryProvider from "../components/QueryProvider";
 
 export const metadata: Metadata = {
   title: "adrenger by adrendev",
@@ -18,9 +19,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={`antialiased`}>
         <TokenProvider>
-          <Container>
-            <ContainerWithChats>{children}</ContainerWithChats>
-          </Container>
+          <QueryProvider>
+            <Container>
+              <ContainerWithChats>{children}</ContainerWithChats>
+            </Container>
+          </QueryProvider>
         </TokenProvider>
       </body>
     </html>
