@@ -11,7 +11,7 @@ function RememberMe() {
       />
       <label
         className="hover:text-blue-500 hover:cursor-pointer"
-        htmlFor="remember-me"
+        htmlFor="remember-me-checkbox"
       >
         Remember Me
       </label>
