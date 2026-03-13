@@ -21,6 +21,9 @@ function LoginContainer() {
 
     const formData = new FormData(e.target);
 
+    const rememberMe = formData.get("remember-me");
+    localStorage.setItem("remember-me", rememberMe === "on" ? "on" : "off");
+
     startTransition(() => {
       formAction(formData);
     });

@@ -25,7 +25,9 @@ function TokenProvider({ children }: { children: ReactNode }) {
           try {
             const res = await apiRefresh.post(
               "/auth/refresh",
-              {},
+              {
+                rememberMe: localStorage.getItem("remember-me"),
+              },
               { withCredentials: true },
             );
 
