@@ -27,8 +27,8 @@ function Chats() {
     <div>
       {chats.pages.map((page, index) => (
         <Fragment key={index}>
-          {page.map((chat: any) => (
-            <div key={chat.id}>{chat.id}</div>
+          {page.map((chat: any, index: number) => (
+            <div key={index}>{chat.id}</div>
           ))}
         </Fragment>
       ))}

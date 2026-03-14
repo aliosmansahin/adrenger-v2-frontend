@@ -18,13 +18,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased`}>
-        <TokenProvider>
-          <QueryProvider>
-            <Container>
-              <ContainerWithChats>{children}</ContainerWithChats>
-            </Container>
-          </QueryProvider>
-        </TokenProvider>
+        <QueryProvider>
+          <Container>
+            <ContainerWithChats>{children}</ContainerWithChats>
+          </Container>
+        </QueryProvider>
       </body>
     </html>
   );
