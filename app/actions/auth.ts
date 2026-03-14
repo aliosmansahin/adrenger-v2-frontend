@@ -17,7 +17,7 @@ export async function login(initialState: any, formData: FormData) {
         const cookieStore = await cookies();
         
         cookieStore.set("access_token", res.data.access_token, {
-            httpOnly: true,
+            httpOnly: false,
             secure: true,
             sameSite: "strict",
             path: "/",
@@ -69,7 +69,7 @@ export async function signup(initialState: any, formData: FormData) {
         const cookieStore = await cookies();
 
         cookieStore.set("access_token", res.data.access_token, {
-            httpOnly: true,
+            httpOnly: false,
             secure: true,
             sameSite: "strict",
             path: "/",
