@@ -6,7 +6,7 @@ import RememberMe from "./RememberMe";
 import UnfilledLink from "../utils/UnfilledLink";
 import ProfileDataFields from "./ProfileDataFields";
 import { startTransition, useActionState } from "react";
-import { signup } from "@/app/actions";
+import { signup } from "@/app/actions/auth";
 import ErrorMessage from "../utils/ErrorMessage";
 
 function SignupContainer() {

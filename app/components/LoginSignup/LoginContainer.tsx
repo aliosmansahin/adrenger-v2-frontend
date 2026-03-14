@@ -4,7 +4,7 @@ import EmailAndPassword from "./EmailAndPassword";
 import RememberMe from "./RememberMe";
 import LoginButton from "../Login/LoginButton";
 import UnfilledLink from "../utils/UnfilledLink";
-import { login } from "@/app/actions";
+import { login } from "@/app/actions/auth";
 import { startTransition, useActionState, useCallback } from "react";
 import ErrorMessage from "../utils/ErrorMessage";
 
