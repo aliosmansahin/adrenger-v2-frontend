@@ -7,7 +7,7 @@ interface ButtonProps {
 
 function LoadMoreButton({ isFetchingNextPage = true }: ButtonProps) {
   return (
-    <Button disabled={isFetchingNextPage}>
+    <Button disabled={isFetchingNextPage} className="w-full">
       {isFetchingNextPage ? "Loading More Chats" : "LOAD MORE"}
     </Button>
   );

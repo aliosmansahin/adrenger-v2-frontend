@@ -16,7 +16,7 @@ function PaginationEnd({
   if (!show) return null;
 
   return (
-    <div className="text-center">
+    <div className="text-center text-[17px]">
       {hasNextPage ? (
         <LoadMoreButton isFetchingNextPage={isFetchingNextPage} />
       ) : (
