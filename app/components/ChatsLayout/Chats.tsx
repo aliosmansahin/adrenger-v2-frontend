@@ -7,6 +7,7 @@ import ChatCard, { ChatCardData } from "./ChatCard";
 import { Activity, ReactNode } from "react";
 import PaginationEnd from "../Pagination/PaginationEnd";
 import ErrorMessage from "../utils/ErrorMessage";
+import HintMessage from "../utils/HintMessage";
 
 function Chats() {
   const {
@@ -30,24 +31,29 @@ function Chats() {
 
   let contentInside: ReactNode = null;
 
-  if (isLoading) contentInside = <div>Loading Chats...</div>;
-  else if (!chats || chats.pages.length === 0 || chats.pages[0].length === 0)
-    contentInside = (
-      <div className="text-center italic text-gray-400">No Chats</div>
-    );
+  const isDataEmpty =
+    !chats || chats.pages.length === 0 || chats.pages[0].length === 0;
+
+  if (isLoading) contentInside = <HintMessage message="Loading Chats..." />;
+  else if (isDataEmpty && error && !isFetchingNextPage)
+    contentInside = <ErrorMessage message={error.message} />;
+  else if (isDataEmpty) contentInside = <HintMessage message="No Chats" />;
   else {
     contentInside = (
       <>
-        {chats.pages.map((page, index) => (
-          <Fragment key={index}>
-            {page.map((chat: ChatCardData, index: number) => (
-              <ChatCard {...chat} key={index} />
-            ))}
-          </Fragment>
-        ))}
+        <div className="flex flex-col mb-4">
+          {chats.pages.map((page, index) => (
+            <Fragment key={index}>
+              {page.map((chat: ChatCardData, index: number) => (
+                <ChatCard {...chat} key={index} />
+              ))}
+            </Fragment>
+          ))}
+        </div>
         <PaginationEnd
           show={!isLoading}
           isFetchingNextPage={isFetchingNextPage}
+          error={error?.message}
           hasNextPage={hasNextPage}
           onLoadMore={() => fetchNextPage()}
         />
@@ -57,10 +63,7 @@ function Chats() {
 
   return (
     <div className="hidden sm:block sm:max-w-75 w-4/12 p-2">
-      <div className="flex flex-col mb-4">{contentInside}</div>
-      {error && !isLoading && !isFetchingNextPage && (
-        <ErrorMessage message={error.message} />
-      )}
+      {contentInside}
     </div>
   );
 }
