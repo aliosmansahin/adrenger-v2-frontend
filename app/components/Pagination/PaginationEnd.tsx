@@ -18,7 +18,7 @@ function PaginationEnd({
   return (
     <div className="text-center">
       {hasNextPage ? (
-        <LoadMoreButton />
+        <LoadMoreButton isFetchingNextPage={isFetchingNextPage} />
       ) : (
         <span className="italic text-gray-400">No More Chats</span>
       )}
