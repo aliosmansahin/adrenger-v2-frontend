@@ -1,9 +1,9 @@
 "use client";
 
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { fetchAllChats } from "../actions/chats";
+import { fetchAllChats } from "../../actions/chats";
 import { Fragment } from "react/jsx-runtime";
-import ChatCard, { ChatCardData } from "./Home/ChatCard";
+import ChatCard, { ChatCardData } from "./ChatCard";
 
 function Chats() {
   const {
