@@ -6,7 +6,12 @@ export interface ChatCardData {
 }
 
 function ChatCard({ roomId, role, name, lastMessage }: ChatCardData) {
-  return <div>{name}</div>;
+  return (
+    <div>
+      <div>{name}</div>
+      <div>{lastMessage && <span>{lastMessage}</span>}</div>
+    </div>
+  );
 }
 
 export default ChatCard;
