@@ -2,7 +2,8 @@
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { api } from "./lib/axios";
+import { api } from "../lib/axios";
+import axios from "axios";
 
 export async function login(initialState: any, formData: FormData) {
     const rawFormData = {
@@ -12,12 +13,12 @@ export async function login(initialState: any, formData: FormData) {
     }
 
     try {
-        const res = await api.post(`/auth/login`, rawFormData);
+        const res = await axios.post(`${process.env.BACKEND_URL}/auth/login`, rawFormData);
 
         const cookieStore = await cookies();
         
         cookieStore.set("access_token", res.data.access_token, {
-            httpOnly: true,
+            httpOnly: false,
             secure: true,
             sameSite: "strict",
             path: "/",
@@ -64,12 +65,12 @@ export async function signup(initialState: any, formData: FormData) {
     };
 
     try {
-        const res = await api.post(`/auth/register`, rawFormData);
+        const res = await axios.post(`${process.env.BACKEND_URL}/auth/register`, rawFormData);
 
         const cookieStore = await cookies();
 
         cookieStore.set("access_token", res.data.access_token, {
-            httpOnly: true,
+            httpOnly: false,
             secure: true,
             sameSite: "strict",
             path: "/",
