@@ -1,9 +1,9 @@
 import { ReactNode } from "react";
-import Chats from "./Chats";
+import Chats from "./ChatsLayout/Chats";
 
 function ContainerWithChats({ children }: { children: ReactNode }) {
   return (
-    <div>
+    <div className="flex">
       <Chats />
       {children}
     </div>
