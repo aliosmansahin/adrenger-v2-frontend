@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "../globals.css";
 import ContainerWithChats from "../components/ContainerWithChats";
 import Container from "../components/Container";
-import TokenProvider from "../components/Auth/TokenProvider";
 import QueryProvider from "../components/QueryProvider";
 
 export const metadata: Metadata = {

@@ -34,8 +34,8 @@ api.interceptors.request.use(async (request) => {
         expires: inFiveMinutes,
       });
 
-      const rememberMe = cookieStore.get("rememberMe");
-      if(['on', 'true', true, '1', 1].includes(rememberMeHeader)) {
+      const rememberMe = cookieStore.get("rememberMe")?.value ?? "";
+      if(['on', 'true', true, '1', 1].includes(rememberMe)) {
         cookieStore.set("rememberMe", "on", {
           httpOnly: false,
           secure: true,
