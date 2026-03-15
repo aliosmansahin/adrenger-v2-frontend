@@ -3,6 +3,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { fetchAllChats } from "../actions/chats";
 import { Fragment } from "react/jsx-runtime";
+import ChatCard, { ChatCardData } from "./Home/ChatCard";
 
 function Chats() {
   const {
@@ -27,8 +28,8 @@ function Chats() {
     <div>
       {chats.pages.map((page, index) => (
         <Fragment key={index}>
-          {page.map((chat: any, index: number) => (
-            <div key={index}>{chat.id}</div>
+          {page.map((chat: ChatCardData, index: number) => (
+            <ChatCard {...chat} key={index} />
           ))}
         </Fragment>
       ))}
