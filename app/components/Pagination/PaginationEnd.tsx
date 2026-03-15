@@ -16,9 +16,13 @@ function PaginationEnd({
   if (!show) return null;
 
   return (
-    <>
-      <LoadMoreButton />
-    </>
+    <div className="text-center">
+      {hasNextPage ? (
+        <LoadMoreButton />
+      ) : (
+        <span className="italic text-gray-400">No More Chats</span>
+      )}
+    </div>
   );
 }
 
