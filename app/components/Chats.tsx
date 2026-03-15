@@ -26,13 +26,15 @@ function Chats() {
 
   return (
     <div className="hidden sm:block sm:max-w-75 w-4/12 p-2">
-      {chats.pages.map((page, index) => (
-        <Fragment key={index}>
-          {page.map((chat: ChatCardData, index: number) => (
-            <ChatCard {...chat} key={index} />
-          ))}
-        </Fragment>
-      ))}
+      <div className="flex flex-col">
+        {chats.pages.map((page, index) => (
+          <Fragment key={index}>
+            {page.map((chat: ChatCardData, index: number) => (
+              <ChatCard {...chat} key={index} />
+            ))}
+          </Fragment>
+        ))}
+      </div>
     </div>
   );
 }
