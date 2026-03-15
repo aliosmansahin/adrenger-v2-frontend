@@ -6,6 +6,7 @@ import { Fragment } from "react/jsx-runtime";
 import ChatCard, { ChatCardData } from "./ChatCard";
 import { Activity, ReactNode } from "react";
 import PaginationEnd from "../Pagination/PaginationEnd";
+import ErrorMessage from "../utils/ErrorMessage";
 
 function Chats() {
   const {
@@ -29,8 +30,7 @@ function Chats() {
 
   let contentInside: ReactNode = null;
 
-  if (error) contentInside = <div>{error?.message}</div>;
-  else if (isLoading) contentInside = <div>Loading Chats...</div>;
+  if (isLoading) contentInside = <div>Loading Chats...</div>;
   else if (!chats || chats.pages.length === 0 || chats.pages[0].length === 0)
     contentInside = (
       <div className="text-center italic text-gray-400">No Chats</div>
@@ -58,6 +58,9 @@ function Chats() {
   return (
     <div className="hidden sm:block sm:max-w-75 w-4/12 p-2">
       <div className="flex flex-col mb-4">{contentInside}</div>
+      {error && !isLoading && !isFetchingNextPage && (
+        <ErrorMessage message={error.message} />
+      )}
     </div>
   );
 }
