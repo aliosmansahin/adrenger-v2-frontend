@@ -32,26 +32,32 @@ function Chats() {
   if (error) contentInside = <div>{error?.message}</div>;
   else if (isLoading) contentInside = <div>Loading Chats...</div>;
   else if (!chats || chats.pages.length === 0 || chats.pages[0].length === 0)
-    contentInside = <div>No Chats</div>;
+    contentInside = (
+      <div className="text-center italic text-gray-400">No Chats</div>
+    );
   else {
-    contentInside = chats.pages.map((page, index) => (
-      <Fragment key={index}>
-        {page.map((chat: ChatCardData, index: number) => (
-          <ChatCard {...chat} key={index} />
+    contentInside = (
+      <>
+        {chats.pages.map((page, index) => (
+          <Fragment key={index}>
+            {page.map((chat: ChatCardData, index: number) => (
+              <ChatCard {...chat} key={index} />
+            ))}
+          </Fragment>
         ))}
-      </Fragment>
-    ));
+        <PaginationEnd
+          show={!isLoading}
+          isFetchingNextPage={isFetchingNextPage}
+          hasNextPage={hasNextPage}
+          onLoadMore={() => fetchNextPage()}
+        />
+      </>
+    );
   }
 
   return (
     <div className="hidden sm:block sm:max-w-75 w-4/12 p-2">
       <div className="flex flex-col mb-4">{contentInside}</div>
-      <PaginationEnd
-        show={!isLoading}
-        isFetchingNextPage={isFetchingNextPage}
-        hasNextPage={hasNextPage}
-        onLoadMore={() => fetchNextPage()}
-      />
     </div>
   );
 }
