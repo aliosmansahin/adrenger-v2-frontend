@@ -20,7 +20,11 @@ function Chats() {
     queryKey: ["chats"],
     queryFn: fetchAllChats,
     initialPageParam: null,
-    getNextPageParam: (lastPage) => lastPage.id,
+    getNextPageParam: (lastPage: ChatCardData[]) => {
+      if (lastPage.length < 10) return null; //Hardcoded limit, consider refactor as a contant
+
+      return lastPage[lastPage.length - 1].roomId;
+    },
   });
 
   let contentInside: ReactNode = null;
