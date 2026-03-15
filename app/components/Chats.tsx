@@ -25,7 +25,7 @@ function Chats() {
   if (!chats || chats.pages.length === 0) return <div>No Chats</div>;
 
   return (
-    <div>
+    <div className="hidden sm:block sm:max-w-75 w-4/12 p-2">
       {chats.pages.map((page, index) => (
         <Fragment key={index}>
           {page.map((chat: ChatCardData, index: number) => (

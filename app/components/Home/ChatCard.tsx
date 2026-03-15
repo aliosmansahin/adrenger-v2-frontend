@@ -5,11 +5,18 @@ export interface ChatCardData {
   lastMessage?: string | undefined; //Consider converting message with date
 }
 
-function ChatCard({ roomId, role, name, lastMessage }: ChatCardData) {
+function ChatCard({
+  roomId,
+  role,
+  name,
+  lastMessage = "testsdlkaskdsadksaşldkaslşsskjjsjkjdsajksdajkdsakjlsdakjlsdajksdlajklsdajksldajksldajksdajkdsakjlsdajdlksajlkdasklak",
+}: ChatCardData) {
   return (
     <div>
-      <div>{name}</div>
-      <div>{lastMessage && <span>{lastMessage}</span>}</div>
+      <div className="overflow-hidden text-ellipsis">{name}</div>
+      <div className="overflow-hidden text-ellipsis">
+        {lastMessage && <span>{lastMessage}</span>}
+      </div>
     </div>
   );
 }

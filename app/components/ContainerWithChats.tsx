@@ -3,7 +3,7 @@ import Chats from "./Chats";
 
 function ContainerWithChats({ children }: { children: ReactNode }) {
   return (
-    <div>
+    <div className="flex">
       <Chats />
       {children}
     </div>
