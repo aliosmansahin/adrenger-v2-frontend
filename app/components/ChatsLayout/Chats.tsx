@@ -19,9 +19,9 @@ function Chats() {
   } = useInfiniteQuery({
     queryKey: ["chats"],
     queryFn: fetchAllChats,
-    initialPageParam: null,
+    initialPageParam: undefined,
     getNextPageParam: (lastPage: ChatCardData[]) => {
-      if (lastPage.length < 10) return null; //Hardcoded limit, consider refactor as a contant
+      if (lastPage.length < 5) return undefined; //Hardcoded limit, consider refactor as a constant
 
       return lastPage[lastPage.length - 1].roomId;
     },
