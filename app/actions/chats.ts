@@ -22,3 +22,20 @@ export async function fetchAllChats({pageParam}: {pageParam: any}) {
     
     return result.data;
 }
+
+export async function fetchRoom({roomId}: {roomId: number}) {
+    const cookieStore = await cookies();
+
+    const result = await api.get(`/rooms/${roomId}`, {
+        headers: {
+            Cookie: cookieStore.toString()
+        }
+    });
+
+    if(result.status !== 200) {
+        console.log(`An error occurred: ${result.data}`);
+        throw new Error(result.data);
+    }
+    
+    return result.data;
+}
