@@ -1,4 +1,4 @@
-import Button from "../utils/Button";
+import FilledButton from "../utils/FilledButton";
 
 interface ButtonProps {
   disabled?: boolean;
@@ -6,9 +6,9 @@ interface ButtonProps {
 
 function LoginButton({ disabled = false }: ButtonProps) {
   return (
-    <Button type="submit" disabled={disabled}>
+    <FilledButton type="submit" disabled={disabled}>
       LOGIN
-    </Button>
+    </FilledButton>
   );
 }
 
