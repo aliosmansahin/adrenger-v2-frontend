@@ -1,5 +1,7 @@
+import Chat from "@/app/components/ChatsLayout/Chat";
+
 function Page() {
-  return <div>Room Page</div>;
+  return <Chat />;
 }
 
 export default Page;
