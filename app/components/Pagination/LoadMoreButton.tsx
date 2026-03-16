@@ -1,5 +1,5 @@
 import React, { MouseEventHandler } from "react";
-import Button from "../utils/Button";
+import FilledButton from "../utils/FilledButton";
 
 interface ButtonProps {
   isFetchingNextPage?: boolean;
@@ -8,9 +8,13 @@ interface ButtonProps {
 
 function LoadMoreButton({ isFetchingNextPage = false, onClick }: ButtonProps) {
   return (
-    <Button disabled={isFetchingNextPage} className="w-full" onClick={onClick}>
+    <FilledButton
+      disabled={isFetchingNextPage}
+      className="w-full"
+      onClick={onClick}
+    >
       {isFetchingNextPage ? "Loading More Chats" : "LOAD MORE"}
-    </Button>
+    </FilledButton>
   );
 }
 

@@ -8,6 +8,7 @@ import { Activity, ReactNode } from "react";
 import PaginationEnd from "../Pagination/PaginationEnd";
 import ErrorMessage from "../utils/ErrorMessage";
 import HintMessage from "../utils/HintMessage";
+import ChatsHeader from "./ChatsHeader";
 
 function Chats() {
   const {
@@ -41,6 +42,7 @@ function Chats() {
   else {
     contentInside = (
       <>
+        <ChatsHeader />
         <div className="flex flex-col mb-4">
           {chats.pages.map((page, index) => (
             <Fragment key={index}>

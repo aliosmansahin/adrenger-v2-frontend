@@ -1,4 +1,4 @@
-import Button from "../utils/Button";
+import FilledButton from "../utils/FilledButton";
 import UnfilledLink from "../utils/UnfilledLink";
 
 function Welcome() {
@@ -11,7 +11,7 @@ function Welcome() {
         <UnfilledLink href="/create" className="px-3 mr-3">
           CREATE A ROOM
         </UnfilledLink>
-        <Button className="px-3">SETTINGS</Button>
+        <FilledButton className="px-3">SETTINGS</FilledButton>
       </span>
     </div>
   );
