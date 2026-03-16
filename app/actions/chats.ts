@@ -6,9 +6,14 @@ import { cookies } from "next/headers";
 export async function fetchAllChats({pageParam}: {pageParam: any}) {
     const cookieStore = await cookies();
     
-    const result = await api.get("/home", {headers: {Cookie: cookieStore.toString()}});
-
-    console.log(result.data);
+    const result = await api.get("/home", {
+        headers: {
+            Cookie: cookieStore.toString()
+        },
+        params: {
+            cursor: pageParam,
+        },
+    });
 
     if(result.status !== 200) {
         console.log(`An error occurred: ${result.data}`);

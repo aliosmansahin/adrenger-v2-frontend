@@ -6,6 +6,8 @@ import { Fragment } from "react/jsx-runtime";
 import ChatCard, { ChatCardData } from "./ChatCard";
 import { Activity, ReactNode } from "react";
 import PaginationEnd from "../Pagination/PaginationEnd";
+import ErrorMessage from "../utils/ErrorMessage";
+import HintMessage from "../utils/HintMessage";
 
 function Chats() {
   const {
@@ -19,35 +21,49 @@ function Chats() {
   } = useInfiniteQuery({
     queryKey: ["chats"],
     queryFn: fetchAllChats,
-    initialPageParam: null,
-    getNextPageParam: (lastPage) => lastPage.id,
+    initialPageParam: undefined,
+    getNextPageParam: (lastPage: ChatCardData[]) => {
+      if (lastPage.length < 5) return undefined; //Hardcoded limit, consider refactor as a constant
+
+      return lastPage[lastPage.length - 1].roomId;
+    },
   });
 
   let contentInside: ReactNode = null;
 
-  if (error) contentInside = <div>{error?.message}</div>;
-  else if (isLoading) contentInside = <div>Loading Chats...</div>;
-  else if (!chats || chats.pages.length === 0 || chats.pages[0].length === 0)
-    contentInside = <div>No Chats</div>;
+  const isDataEmpty =
+    !chats || chats.pages.length === 0 || chats.pages[0].length === 0;
+
+  if (isLoading) contentInside = <HintMessage message="Loading Chats..." />;
+  else if (isDataEmpty && error && !isFetchingNextPage)
+    contentInside = <ErrorMessage message={error.message} />;
+  else if (isDataEmpty) contentInside = <HintMessage message="No Chats" />;
   else {
-    contentInside = chats.pages.map((page, index) => (
-      <Fragment key={index}>
-        {page.map((chat: ChatCardData, index: number) => (
-          <ChatCard {...chat} key={index} />
-        ))}
-      </Fragment>
-    ));
+    contentInside = (
+      <>
+        <div className="flex flex-col mb-4">
+          {chats.pages.map((page, index) => (
+            <Fragment key={index}>
+              {page.map((chat: ChatCardData, index: number) => (
+                <ChatCard {...chat} key={index} />
+              ))}
+            </Fragment>
+          ))}
+        </div>
+        <PaginationEnd
+          show={!isLoading}
+          isFetchingNextPage={isFetchingNextPage}
+          error={error?.message}
+          hasNextPage={hasNextPage}
+          onLoadMore={() => fetchNextPage()}
+        />
+      </>
+    );
   }
 
   return (
     <div className="hidden sm:block sm:max-w-75 w-4/12 p-2">
-      <div className="flex flex-col mb-4">{contentInside}</div>
-      <PaginationEnd
-        show={!isLoading}
-        isFetchingNextPage={isFetchingNextPage}
-        hasNextPage={hasNextPage}
-        onLoadMore={() => fetchNextPage()}
-      />
+      {contentInside}
     </div>
   );
 }

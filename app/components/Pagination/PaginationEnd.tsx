@@ -1,3 +1,5 @@
+import ErrorMessage from "../utils/ErrorMessage";
+import HintMessage from "../utils/HintMessage";
 import LoadMoreButton from "./LoadMoreButton";
 
 interface PaginationProps {
@@ -5,6 +7,7 @@ interface PaginationProps {
   isFetchingNextPage: boolean;
   onLoadMore: () => void;
   hasNextPage: boolean;
+  error?: string | undefined;
 }
 
 function PaginationEnd({
@@ -12,18 +15,24 @@ function PaginationEnd({
   isFetchingNextPage,
   onLoadMore,
   hasNextPage,
+  error,
 }: PaginationProps) {
   if (!show) return null;
 
   return (
-    <div className="text-center text-[17px]">
-      {!hasNextPage ? (
+    <div className="text-[17px]">
+      {error && !isFetchingNextPage && (
+        <div className="mb-2">
+          <ErrorMessage message={error} />
+        </div>
+      )}
+      {hasNextPage ? (
         <LoadMoreButton
           isFetchingNextPage={isFetchingNextPage}
           onClick={onLoadMore}
         />
       ) : (
-        <span className="italic text-gray-400">No More Chats</span>
+        <HintMessage message="No More Chats" />
       )}
     </div>
   );
