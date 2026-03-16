@@ -5,6 +5,9 @@ import { ChatCardData } from "./ChatCard";
 import HintMessage from "../utils/HintMessage";
 import { useQuery } from "@tanstack/react-query";
 import ErrorMessage from "../utils/ErrorMessage";
+import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import UnfilledButton from "../utils/UnfilledButton";
 
 interface Props {
   roomId: number;
@@ -24,9 +27,17 @@ function ChatHeader({ roomId }: Props) {
 
   if (isLoading || !room) content = <HintMessage message="Loading room data" />;
   else if (error) content = <ErrorMessage message={error.message} />;
-  else content = <span>{room.name}</span>;
+  else
+    content = (
+      <div className="flex justify-between items-center">
+        <span>{room.name}</span>
+        <UnfilledButton className="text-white">
+          <FontAwesomeIcon icon={faEllipsisVertical} />
+        </UnfilledButton>
+      </div>
+    );
 
-  return <header>{content}</header>;
+  return <header className="w-full p-3 text-[20px] border-b">{content}</header>;
 }
 
 export default ChatHeader;
