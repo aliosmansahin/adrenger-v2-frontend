@@ -11,7 +11,7 @@ function UnfilledLink({ href, className, children }: LinkProps) {
   return (
     <Link
       href={href}
-      className={`text-blue-400 hover:text-blue-500 focus:text-blue-700 ${className}`}
+      className={`text-blue-400 hover:text-blue-500 active:text-blue-700 ${className}`}
     >
       {children}
     </Link>
