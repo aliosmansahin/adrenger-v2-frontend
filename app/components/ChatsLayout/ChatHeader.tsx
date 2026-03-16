@@ -1,11 +1,13 @@
+import { ChatCardData } from "./ChatCard";
+
 interface Props {
-  roomName: string;
+  roomId: number;
 }
 
-function ChatHeader({ roomName }: Props) {
+async function ChatHeader({ roomId }: Props) {
   return (
     <header>
-      <span>{roomName}</span>
+      <span>{roomId}</span>
     </header>
   );
 }
