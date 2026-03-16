@@ -1,5 +1,5 @@
-import Chat from "../components/ChatsLayout/Chat";
+import Welcome from "../components/ChatsLayout/Welcome";
 
 export default function Home() {
-  return <Chat />;
+  return <Welcome />;
 }
