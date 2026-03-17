@@ -1,5 +1,5 @@
 function Messages() {
-  return <div>Messages</div>;
+  return <div className="grow">Messages</div>;
 }
 
 export default Messages;
