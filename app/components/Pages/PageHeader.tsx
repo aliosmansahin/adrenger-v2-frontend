@@ -7,7 +7,7 @@ interface Props {
 
 function PageHeader({ className, text }: Props) {
   return (
-    <header className="p-3">
+    <header className="px-3 border-b h-13 flex items-center">
       <PageTitle text={text} className={className} />
     </header>
   );

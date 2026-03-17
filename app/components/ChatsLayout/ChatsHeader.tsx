@@ -4,7 +4,7 @@ import UnfilledButton from "../utils/UnfilledButton";
 
 function ChatsHeader() {
   return (
-    <header className="text-[20px] p-3 mb-3 border-b flex justify-between items-center">
+    <header className="text-[20px] h-13 px-3 mb-3 border-b flex justify-between items-center">
       <h1>adrenger</h1>
       <UnfilledButton className="text-white">
         <FontAwesomeIcon icon={faEllipsisVertical} />

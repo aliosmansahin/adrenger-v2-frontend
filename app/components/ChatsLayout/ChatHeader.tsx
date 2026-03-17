@@ -29,7 +29,7 @@ function ChatHeader({ roomId }: Props) {
   else if (error) content = <ErrorMessage message={error.message} />;
   else
     content = (
-      <div className="flex justify-between items-center">
+      <div className="w-full flex justify-between items-center">
         <span>{room.name}</span>
         <UnfilledButton className="text-white">
           <FontAwesomeIcon icon={faEllipsisVertical} />
@@ -37,7 +37,11 @@ function ChatHeader({ roomId }: Props) {
       </div>
     );
 
-  return <header className="w-full p-3 text-[20px] border-b">{content}</header>;
+  return (
+    <header className="w-full h-13 px-3 flex justify-center items-center text-[20px] border-b">
+      {content}
+    </header>
+  );
 }
 
 export default ChatHeader;
