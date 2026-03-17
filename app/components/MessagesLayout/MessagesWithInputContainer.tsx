@@ -1,12 +1,12 @@
-import MessageInput from "./MessageInput";
-import Messages from "./Messages";
+import MessageInputContainer from "./MessageInputContainer";
+import MessagesContainer from "./MessagesContainer";
 
 function MessagesWithInputContainer() {
   return (
-    <div className="grow p-2 flex flex-col">
-      <Messages />
+    <div className="grow flex flex-col">
+      <MessagesContainer />
       <div className="border-b" />
-      <MessageInput />
+      <MessageInputContainer />
     </div>
   );
 }

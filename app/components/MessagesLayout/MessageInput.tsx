@@ -1,5 +1,7 @@
+import InputField from "../utils/InputField";
+
 function MessageInput() {
-  return <div>MessageInput</div>;
+  return <InputField className="grow-3" placeholder="Type a message" />;
 }
 
 export default MessageInput;
