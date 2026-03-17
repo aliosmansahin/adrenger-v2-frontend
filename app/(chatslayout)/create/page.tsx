@@ -1,11 +1,11 @@
-import PageTitle from "@/app/components/utils/PageTitle";
+import CreateRoomForm from "@/app/components/CreateRoom/CreateRoomForm";
+import PageHeader from "@/app/components/Pages/PageHeader";
 
 function Page() {
   return (
-    <div className="w-full h-full">
-      <header className="p-3">
-        <PageTitle text="Create Room" />
-      </header>
+    <div className="w-full h-full flex flex-col">
+      <PageHeader text="Create Room" />
+      <CreateRoomForm />
     </div>
   );
 }
