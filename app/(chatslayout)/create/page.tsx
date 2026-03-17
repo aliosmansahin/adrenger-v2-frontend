@@ -1,11 +1,9 @@
-import PageTitle from "@/app/components/utils/PageTitle";
+import PageHeader from "@/app/components/Pages/PageHeader";
 
 function Page() {
   return (
     <div className="w-full h-full">
-      <header className="p-3">
-        <PageTitle text="Create Room" />
-      </header>
+      <PageHeader text="Create Room" />
     </div>
   );
 }
