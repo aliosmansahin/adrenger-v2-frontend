@@ -6,8 +6,9 @@ import RememberMe from "./RememberMe";
 import UnfilledLink from "../utils/UnfilledLink";
 import ProfileDataFields from "./ProfileDataFields";
 import { startTransition, useActionState } from "react";
-import { signup } from "@/app/actions";
+import { signup } from "@/app/actions/auth";
 import ErrorMessage from "../utils/ErrorMessage";
+import Cookies from "js-cookie";
 
 function SignupContainer() {
   const initialState = {
@@ -22,8 +23,8 @@ function SignupContainer() {
 
     const formData = new FormData(e.target);
 
-    const rememberMe = formData.get("remember-me");
-    localStorage.setItem("remember-me", rememberMe === "on" ? "on" : "off");
+    const rememberMe = formData.get("rememberMe");
+    Cookies.set("rememberMe", rememberMe === "on" ? "on" : "off");
 
     startTransition(() => {
       formAction(formData);

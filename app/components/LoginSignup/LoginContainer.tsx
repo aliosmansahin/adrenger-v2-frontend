@@ -4,9 +4,10 @@ import EmailAndPassword from "./EmailAndPassword";
 import RememberMe from "./RememberMe";
 import LoginButton from "../Login/LoginButton";
 import UnfilledLink from "../utils/UnfilledLink";
-import { login } from "@/app/actions";
+import { login } from "@/app/actions/auth";
 import { startTransition, useActionState, useCallback } from "react";
 import ErrorMessage from "../utils/ErrorMessage";
+import Cookies from "js-cookie";
 
 function LoginContainer() {
   const initialState = {
@@ -21,8 +22,8 @@ function LoginContainer() {
 
     const formData = new FormData(e.target);
 
-    const rememberMe = formData.get("remember-me");
-    localStorage.setItem("remember-me", rememberMe === "on" ? "on" : "off");
+    const rememberMe = formData.get("rememberMe");
+    Cookies.set("rememberMe", rememberMe === "on" ? "on" : "off");
 
     startTransition(() => {
       formAction(formData);

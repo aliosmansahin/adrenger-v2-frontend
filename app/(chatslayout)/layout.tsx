@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "../globals.css";
 import ContainerWithChats from "../components/ContainerWithChats";
 import Container from "../components/Container";
-import TokenProvider from "../components/Auth/TokenProvider";
 import QueryProvider from "../components/QueryProvider";
 
 export const metadata: Metadata = {
@@ -18,13 +17,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased`}>
-        <TokenProvider>
-          <QueryProvider>
-            <Container>
-              <ContainerWithChats>{children}</ContainerWithChats>
-            </Container>
-          </QueryProvider>
-        </TokenProvider>
+        <QueryProvider>
+          <Container>
+            <ContainerWithChats>{children}</ContainerWithChats>
+          </Container>
+        </QueryProvider>
       </body>
     </html>
   );
