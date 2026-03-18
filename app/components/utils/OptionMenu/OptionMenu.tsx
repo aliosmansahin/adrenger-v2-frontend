@@ -27,7 +27,10 @@ const OptionMenu = forwardRef<OptionMenuHandle, Props>((props, ref) => {
   if (!show) return null;
 
   return (
-    <div className="absolute" ref={menuRef}>
+    <div
+      className="absolute left-1/2 -translate-x-full top-10 bg-gray-400 rounded-md p-2"
+      ref={menuRef}
+    >
       <span>Option Menu</span>
       <section>{props.children}</section>
     </div>
