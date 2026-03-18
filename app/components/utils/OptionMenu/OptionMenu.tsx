@@ -3,6 +3,7 @@
 import {
   forwardRef,
   ReactNode,
+  useEffect,
   useImperativeHandle,
   useRef,
   useState,
@@ -15,6 +16,7 @@ export interface OptionMenuHandle {
 
 interface Props {
   children?: ReactNode;
+  onOpenChange: (show: boolean) => void;
 }
 
 const OptionMenu = forwardRef<OptionMenuHandle, Props>((props, ref) => {
@@ -26,6 +28,10 @@ const OptionMenu = forwardRef<OptionMenuHandle, Props>((props, ref) => {
   }));
 
   useClickOutside(menuRef, () => setShow(false));
+
+  useEffect(() => {
+    props.onOpenChange(show);
+  }, [show]);
 
   if (!show) return null;
 

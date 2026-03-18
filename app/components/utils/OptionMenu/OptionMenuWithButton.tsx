@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UnfilledButton from "../UnfilledButton";
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import OptionMenu, { OptionMenuHandle } from "./OptionMenu";
-import { ReactNode, useRef } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 
 function OptionMenuWithButton({
   children,
@@ -15,10 +15,12 @@ function OptionMenuWithButton({
 }) {
   const menuRef = useRef<OptionMenuHandle>(null);
 
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <span className="relative">
       <UnfilledButton
-        className="text-white"
+        className={`${isOpen ? "" : "text-white"}`}
         onClick={() => menuRef.current?.openMenu()}
       >
         {buttonContent ? (
@@ -27,7 +29,9 @@ function OptionMenuWithButton({
           <FontAwesomeIcon icon={faEllipsisVertical} />
         )}
       </UnfilledButton>
-      <OptionMenu ref={menuRef}>{children}</OptionMenu>
+      <OptionMenu ref={menuRef} onOpenChange={(show) => setIsOpen(show)}>
+        {children}
+      </OptionMenu>
     </span>
   );
 }
