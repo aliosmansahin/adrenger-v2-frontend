@@ -8,6 +8,8 @@ import ErrorMessage from "../utils/ErrorMessage";
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UnfilledButton from "../utils/UnfilledButton";
+import OptionMenuWithButton from "../utils/OptionMenu/OptionMenuWithButton";
+import OptionMenuOption from "../utils/OptionMenu/OptionMenuOption";
 
 interface Props {
   roomId: number;
@@ -31,9 +33,11 @@ function ChatHeader({ roomId }: Props) {
     content = (
       <div className="w-full flex justify-between items-center">
         <span>{room.name}</span>
-        <UnfilledButton className="text-white">
-          <FontAwesomeIcon icon={faEllipsisVertical} />
-        </UnfilledButton>
+        <OptionMenuWithButton>
+          <OptionMenuOption content="Room Info" />
+          <OptionMenuOption content="Joined Users" />
+          <OptionMenuOption content="Leave Room" />
+        </OptionMenuWithButton>
       </div>
     );
 

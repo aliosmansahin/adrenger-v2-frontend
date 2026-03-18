@@ -1,3 +1,10 @@
 {
-    "js/ts.tsdk.path": "node_modules\\typescript\\lib"
+    "js/ts.tsdk.path": "node_modules\\typescript\\lib",
+    "python-envs.pythonProjects": [
+        {
+            "path": "app/components/utils/OptionMenu",
+            "envManager": "ms-python.python:venv",
+            "packageManager": "ms-python.python:pip"
+        }
+    ]
 }
