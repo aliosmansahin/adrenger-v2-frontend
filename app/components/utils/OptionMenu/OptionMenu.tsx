@@ -1,14 +1,12 @@
 "use client";
 
 import {
-  ComponentPropsWithRef,
   forwardRef,
   ReactNode,
   useImperativeHandle,
   useRef,
   useState,
 } from "react";
-import OptionMenuOption from "./OptionMenuOption";
 
 export interface OptionMenuHandle {
   openMenu: () => void;
@@ -31,10 +29,7 @@ const OptionMenu = forwardRef<OptionMenuHandle, Props>((props, ref) => {
   return (
     <div className="absolute" ref={menuRef}>
       <span>Option Menu</span>
-      <section>
-        <OptionMenuOption />
-        <OptionMenuOption />
-      </section>
+      <section>{props.children}</section>
     </div>
   );
 });
