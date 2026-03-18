@@ -4,17 +4,19 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import FilledButton from "../utils/FilledButton";
 import InputWithLabel from "../utils/InputWithLabel";
 import { createRoom } from "@/app/actions/chats";
-import { startTransition, SubmitEvent } from "react";
+import { startTransition, SubmitEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 function CreateRoomForm() {
   const queryClient = useQueryClient();
   const router = useRouter();
 
+  const [buttonActive, setButtonActive] = useState(true);
+
   const mutation = useMutation({
     mutationFn: createRoom,
-    onSuccess: async (id: string) => {
-      await queryClient.invalidateQueries({
+    onSuccess: (id: string) => {
+      queryClient.invalidateQueries({
         queryKey: ["chats"],
       });
 
@@ -22,6 +24,10 @@ function CreateRoomForm() {
     },
     onError: () => {},
   });
+
+  useEffect(() => {
+    if (mutation.isPending) setButtonActive(false);
+  }, [mutation.isPending]);
 
   const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -54,8 +60,12 @@ function CreateRoomForm() {
             label="Room Password*"
           />
         </div>
-        <FilledButton type="submit" disabled={mutation.isPending}>
-          {mutation.isPending ? "Creating Room" : "CREATE ROOM"}
+        <FilledButton type="submit" disabled={!buttonActive}>
+          {buttonActive
+            ? "CREATE ROOM"
+            : mutation.isPending
+              ? "Creating Room"
+              : "Redirecting to the room"}
         </FilledButton>
       </div>
     </form>
