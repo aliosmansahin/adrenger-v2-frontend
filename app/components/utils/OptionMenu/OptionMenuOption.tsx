@@ -9,9 +9,12 @@ interface Props {
 
 function OptionMenuOption({ content, onClick }: Props) {
   return (
-    <div className="w-full p-2 not-last:border-b not-last:border-gray-300">
-      <button onClick={onClick}>{content}</button>
-    </div>
+    <button
+      className="w-full text-start not-last:border-b not-last:border-gray-300 hover:bg-gray-500 p-2 hover:cursor-pointer active:bg-gray-600"
+      onClick={onClick}
+    >
+      {content}
+    </button>
   );
 }
 

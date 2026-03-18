@@ -38,7 +38,7 @@ const OptionMenu = forwardRef<OptionMenuHandle, Props>((props, ref) => {
 
   return (
     <div
-      className="absolute left-1/2 -translate-x-full top-10 bg-gray-400 rounded-md flex flex-col"
+      className="absolute left-1/2 -translate-x-full top-10 bg-gray-400 rounded-md flex flex-col overflow-hidden"
       ref={menuRef}
     >
       {props.title && <span className="border-b px-2 py-1">{props.title}</span>}
