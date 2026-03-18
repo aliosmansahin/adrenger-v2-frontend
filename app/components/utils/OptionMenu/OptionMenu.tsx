@@ -38,11 +38,13 @@ const OptionMenu = forwardRef<OptionMenuHandle, Props>((props, ref) => {
 
   return (
     <div
-      className="absolute left-1/2 -translate-x-full top-10 bg-gray-400 rounded-md p-2 flex flex-col"
+      className="absolute left-1/2 -translate-x-full top-10 bg-gray-400 rounded-md flex flex-col"
       ref={menuRef}
     >
-      {props.title && <span className="border-b pb-2 mb-2">{props.title}</span>}
-      <section>{props.children}</section>
+      {props.title && <span className="border-b px-2 py-1">{props.title}</span>}
+      <section className="max-w-37.5 min-w-30 text-[17px] flex flex-col">
+        {props.children}
+      </section>
     </div>
   );
 });

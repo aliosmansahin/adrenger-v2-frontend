@@ -6,8 +6,8 @@ function ChatsHeader() {
     <header className="text-[20px] h-13 px-3 border-b flex justify-between items-center">
       <h1>adrenger</h1>
       <OptionMenuWithButton>
-        <OptionMenuOption />
-        <OptionMenuOption />
+        <OptionMenuOption content="Create Room" />
+        <OptionMenuOption content="Sign Out" />
       </OptionMenuWithButton>
     </header>
   );
