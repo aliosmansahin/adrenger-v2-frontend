@@ -21,7 +21,7 @@ function OptionMenuWithButton({
     <span className="relative">
       <UnfilledButton
         className={`${isOpen ? "" : "text-white"}`}
-        onClick={() => menuRef.current?.openMenu()}
+        onClick={() => (isOpen ? null : menuRef.current?.openMenu())}
       >
         {buttonContent ? (
           <>{buttonContent}</>
