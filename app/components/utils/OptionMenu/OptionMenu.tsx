@@ -16,6 +16,7 @@ export interface OptionMenuHandle {
 
 interface Props {
   children?: ReactNode;
+  title?: string | undefined;
   onOpenChange: (show: boolean) => void;
 }
 
@@ -37,10 +38,10 @@ const OptionMenu = forwardRef<OptionMenuHandle, Props>((props, ref) => {
 
   return (
     <div
-      className="absolute left-1/2 -translate-x-full top-10 bg-gray-400 rounded-md p-2"
+      className="absolute left-1/2 -translate-x-full top-10 bg-gray-400 rounded-md p-2 flex flex-col"
       ref={menuRef}
     >
-      <span>Option Menu</span>
+      {props.title && <span className="border-b pb-2 mb-2">{props.title}</span>}
       <section>{props.children}</section>
     </div>
   );

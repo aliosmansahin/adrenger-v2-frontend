@@ -9,9 +9,11 @@ import { ReactNode, useEffect, useRef, useState } from "react";
 function OptionMenuWithButton({
   children,
   buttonContent,
+  menuTitle,
 }: {
   children: ReactNode;
   buttonContent?: ReactNode | undefined;
+  menuTitle?: string | undefined;
 }) {
   const menuRef = useRef<OptionMenuHandle>(null);
 
@@ -29,7 +31,11 @@ function OptionMenuWithButton({
           <FontAwesomeIcon icon={faEllipsisVertical} />
         )}
       </UnfilledButton>
-      <OptionMenu ref={menuRef} onOpenChange={(show) => setIsOpen(show)}>
+      <OptionMenu
+        ref={menuRef}
+        onOpenChange={(show) => setIsOpen(show)}
+        title={menuTitle}
+      >
         {children}
       </OptionMenu>
     </span>
