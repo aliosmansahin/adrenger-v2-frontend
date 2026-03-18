@@ -6,8 +6,6 @@ import { cookies } from "next/headers";
 export async function fetchAllChats({pageParam}: {pageParam: any}) {
     const cookieStore = await cookies();
 
-    console.log("fetch all chats");
-    
     const result = await api.get("/home", {
         headers: {
             Cookie: cookieStore.toString()
@@ -21,8 +19,6 @@ export async function fetchAllChats({pageParam}: {pageParam: any}) {
         console.log(`An error occurred: ${result.data}`);
         throw new Error(result.data);
     }
-
-    console.log(result.data);
     
     return result.data;
 }
