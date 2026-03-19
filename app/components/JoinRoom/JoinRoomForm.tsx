@@ -1,19 +1,28 @@
 "use client";
 
-import { fetchRoom } from "@/app/actions/chats";
+import { fetchJoinRoom } from "@/app/actions/chats";
 import { useQuery } from "@tanstack/react-query";
 import { ChatCardData } from "../ChatsLayout/ChatCard";
 import HintMessage from "../utils/HintMessage";
 import ErrorMessage from "../utils/ErrorMessage";
+
+export interface JoinRoomData {
+  id: number;
+  name: number;
+  createdBy: {
+    nickname: string;
+  };
+  hasPassword: boolean;
+}
 
 function JoinRoomForm({ roomId }: { roomId: number }) {
   const {
     data: room,
     isLoading,
     error,
-  } = useQuery<ChatCardData, Error>({
+  } = useQuery<JoinRoomData, Error>({
     queryKey: ["chats", roomId],
-    queryFn: () => fetchRoom({ roomId }),
+    queryFn: () => fetchJoinRoom({ roomId }),
   });
 
   let content = null;

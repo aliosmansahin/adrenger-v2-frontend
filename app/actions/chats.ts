@@ -40,6 +40,23 @@ export async function fetchRoom({roomId}: {roomId: number}) {
     return result.data;
 }
 
+export async function fetchJoinRoom({roomId}: {roomId: number}) {
+    const cookieStore = await cookies();
+
+    const result = await api.get(`/rooms/${roomId}/only-join-data`, {
+        headers: {
+            Cookie: cookieStore.toString()
+        }
+    });
+
+    if(result.status !== 200) {
+        console.log(`An error occurred: ${result.data}`);
+        throw new Error(result.data);
+    }
+    
+    return result.data;
+}
+
 export async function createRoom({name, password} : {name: string, password?: string}) {
     const rawFormData = {
         name,
