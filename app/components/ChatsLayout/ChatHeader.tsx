@@ -60,7 +60,7 @@ function ChatHeader({ roomId }: Props) {
                 }}
               />
               <OptionMenuOption
-                content="Leave Room"
+                content="Delete Room"
                 onClick={() => {
                   menuObject.closeMenu();
                   mutation.mutate({ id: roomId });
