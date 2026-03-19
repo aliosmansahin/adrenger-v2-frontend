@@ -6,7 +6,7 @@ async function Page({ params }: PageProps<"/join/[slug]">) {
   const roomId = Number(slug);
 
   return (
-    <div>
+    <div className="w-full h-full flex flex-col">
       <PageHeader text="Join Room" />
       <JoinRoomForm roomId={roomId} />
     </div>

@@ -1,5 +1,28 @@
+"use client";
+
+import { fetchRoom } from "@/app/actions/chats";
+import { useQuery } from "@tanstack/react-query";
+import { ChatCardData } from "../ChatsLayout/ChatCard";
+import HintMessage from "../utils/HintMessage";
+import ErrorMessage from "../utils/ErrorMessage";
+
 function JoinRoomForm({ roomId }: { roomId: number }) {
-  return <div>JoinRoomForm</div>;
+  const {
+    data: room,
+    isLoading,
+    error,
+  } = useQuery<ChatCardData, Error>({
+    queryKey: ["chats", roomId],
+    queryFn: () => fetchRoom({ roomId }),
+  });
+
+  let content = null;
+
+  if (isLoading || !room) content = <HintMessage message="Loading Room Data" />;
+  else if (error) content = <ErrorMessage message={error.message} />;
+  else content = <div className="w-full h-full"></div>;
+
+  return <main className="w-full grow text-[18px]">{content}</main>;
 }
 
 export default JoinRoomForm;
