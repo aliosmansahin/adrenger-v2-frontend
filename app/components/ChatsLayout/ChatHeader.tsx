@@ -1,21 +1,25 @@
 "use client";
 
-import { fetchRoom } from "@/app/actions/chats";
+import { deleteRoom, fetchRoom } from "@/app/actions/chats";
 import { ChatCardData } from "./ChatCard";
 import HintMessage from "../utils/HintMessage";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import ErrorMessage from "../utils/ErrorMessage";
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UnfilledButton from "../utils/UnfilledButton";
 import OptionMenuWithButton from "../utils/OptionMenu/OptionMenuWithButton";
 import OptionMenuOption from "../utils/OptionMenu/OptionMenuOption";
+import { useRouter } from "next/navigation";
 
 interface Props {
   roomId: number;
 }
 
 function ChatHeader({ roomId }: Props) {
+  const queryClient = useQueryClient();
+  const router = useRouter();
+
   const {
     data: room,
     isLoading,
@@ -23,6 +27,16 @@ function ChatHeader({ roomId }: Props) {
   } = useQuery<ChatCardData, Error>({
     queryKey: ["chats", roomId],
     queryFn: () => fetchRoom({ roomId }),
+  });
+
+  const mutation = useMutation({
+    mutationFn: deleteRoom,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["chats"] });
+      queryClient.cancelQueries({ queryKey: ["chats", roomId] });
+
+      router.replace("/");
+    },
   });
 
   let content = null;
@@ -52,6 +66,7 @@ function ChatHeader({ roomId }: Props) {
                 content="Leave Room"
                 onClick={() => {
                   menuObject.closeMenu();
+                  mutation.mutate({ id: roomId });
                 }}
               />
             </>
