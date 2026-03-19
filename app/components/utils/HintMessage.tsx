@@ -1,5 +1,3 @@
-import React from "react";
-
 function HintMessage({ message }: { message: string }) {
   return <div className="italic text-gray-400 text-center">{message}</div>;
 }

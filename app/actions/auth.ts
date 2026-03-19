@@ -2,7 +2,6 @@
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { api } from "../lib/axios";
 import axios from "axios";
 
 export async function login(initialState: any, formData: FormData) {

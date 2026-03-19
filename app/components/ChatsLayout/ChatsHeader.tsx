@@ -3,7 +3,6 @@
 import { useRouter } from "next/navigation";
 import OptionMenuOption from "../utils/OptionMenu/OptionMenuOption";
 import OptionMenuWithButton from "../utils/OptionMenu/OptionMenuWithButton";
-import { MouseEvent } from "react";
 import { MenuObject } from "../utils/OptionMenu/OptionMenu";
 
 function ChatsHeader() {
