@@ -3,7 +3,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UnfilledButton from "../UnfilledButton";
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
-import OptionMenu, { OptionMenuHandle } from "./OptionMenu";
+import OptionMenu, { MenuObject, OptionMenuHandle } from "./OptionMenu";
 import { ReactNode, useEffect, useRef, useState } from "react";
 
 function OptionMenuWithButton({
@@ -11,7 +11,7 @@ function OptionMenuWithButton({
   buttonContent,
   menuTitle,
 }: {
-  children: ReactNode;
+  children: (menuObject: MenuObject) => ReactNode;
   buttonContent?: ReactNode | undefined;
   menuTitle?: string | undefined;
 }) {

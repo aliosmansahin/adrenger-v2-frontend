@@ -14,8 +14,12 @@ export interface OptionMenuHandle {
   openMenu: () => void;
 }
 
+export interface MenuObject {
+  closeMenu: () => void;
+}
+
 interface Props {
-  children?: ReactNode;
+  children?: (menuObject: MenuObject) => ReactNode;
   title?: string | undefined;
   onOpenChange: (show: boolean) => void;
 }
@@ -43,7 +47,7 @@ const OptionMenu = forwardRef<OptionMenuHandle, Props>((props, ref) => {
     >
       {props.title && <span className="border-b px-2 py-1">{props.title}</span>}
       <section className="max-w-37.5 min-w-30 text-[17px] flex flex-col">
-        {props.children}
+        {props.children?.({ closeMenu: () => setShow(false) })}
       </section>
     </div>
   );

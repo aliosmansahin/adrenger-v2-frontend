@@ -34,9 +34,28 @@ function ChatHeader({ roomId }: Props) {
       <div className="w-full flex justify-between items-center">
         <span>{room.name}</span>
         <OptionMenuWithButton>
-          <OptionMenuOption content="Room Info" />
-          <OptionMenuOption content="Joined Users" />
-          <OptionMenuOption content="Leave Room" />
+          {(menuObject) => (
+            <>
+              <OptionMenuOption
+                content="Room Info"
+                onClick={() => {
+                  menuObject.closeMenu();
+                }}
+              />
+              <OptionMenuOption
+                content="Joined Users"
+                onClick={() => {
+                  menuObject.closeMenu();
+                }}
+              />
+              <OptionMenuOption
+                content="Leave Room"
+                onClick={() => {
+                  menuObject.closeMenu();
+                }}
+              />
+            </>
+          )}
         </OptionMenuWithButton>
       </div>
     );
