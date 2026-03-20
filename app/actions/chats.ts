@@ -129,3 +129,23 @@ export async function joinRoom({id, password}: {id: number, password: string | u
     
     return roomData.id;
 }
+
+export async function leaveRoom({id}: {id: number}) {    
+    const cookieStore = await cookies();
+
+    const result = await api.post(`/rooms/${id}/leave`,
+        {},
+        {
+            headers: {
+                Cookie: cookieStore.toString()
+            }
+        }
+    );
+
+    if(result.status !== 204) {
+        console.log(`An error occurred: ${result.data}`);
+        throw new Error(result.data);
+    }
+
+    return result.data;
+}
