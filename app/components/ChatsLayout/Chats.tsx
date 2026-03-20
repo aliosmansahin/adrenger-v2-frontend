@@ -42,7 +42,6 @@ function Chats() {
   else {
     contentInside = (
       <>
-        <ChatsHeader />
         <div className="flex flex-col mb-4 mt-3 gap-1">
           {chats.pages.map((page, index) => (
             <Fragment key={index}>
@@ -65,6 +64,7 @@ function Chats() {
 
   return (
     <div className="hidden sm:block sm:max-w-75 w-4/12 p-2">
+      <ChatsHeader />
       {contentInside}
     </div>
   );
