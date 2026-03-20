@@ -102,3 +102,30 @@ export async function deleteRoom({id}: {id: number}) {
 
     return result.data;
 }
+
+export async function joinRoom({id, password}: {id: number, password: string | undefined}) {
+    const rawFormData = {
+        id,
+        password,
+    };
+
+    const cookieStore = await cookies();
+
+    const result = await api.post(`/rooms/${id}/join`,
+        rawFormData,
+        {
+            headers: {
+                Cookie: cookieStore.toString()
+            }
+        }
+    );
+
+    if(result.status !== 200) {
+        console.log(`An error occurred: ${result.data}`);
+        throw new Error(result.data);
+    }
+
+    const roomData = result.data;
+    
+    return roomData.id;
+}
