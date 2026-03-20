@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteRoom, fetchRoom } from "@/app/actions/chats";
+import { deleteRoom, fetchRoom, leaveRoom } from "@/app/actions/chats";
 import { ChatCardData } from "./ChatCard";
 import HintMessage from "../utils/HintMessage";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -26,8 +26,18 @@ function ChatHeader({ roomId }: Props) {
     queryFn: () => fetchRoom({ roomId }),
   });
 
-  const mutation = useMutation({
+  const deleteMutation = useMutation({
     mutationFn: deleteRoom,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["chats"] });
+      queryClient.cancelQueries({ queryKey: ["chats", roomId] });
+
+      router.replace("/");
+    },
+  });
+
+  const leaveMutation = useMutation({
+    mutationFn: leaveRoom,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["chats"] });
       queryClient.cancelQueries({ queryKey: ["chats", roomId] });
@@ -62,6 +72,7 @@ function ChatHeader({ roomId }: Props) {
               <OptionMenuOption
                 content="Leave Room"
                 onClick={() => {
+                  leaveMutation.mutate({ id: roomId });
                   menuObject.closeMenu();
                 }}
               />
@@ -69,7 +80,7 @@ function ChatHeader({ roomId }: Props) {
                 content="Delete Room"
                 onClick={() => {
                   menuObject.closeMenu();
-                  mutation.mutate({ id: roomId });
+                  deleteMutation.mutate({ id: roomId });
                 }}
               />
             </>
