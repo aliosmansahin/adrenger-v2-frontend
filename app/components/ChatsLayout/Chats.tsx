@@ -4,7 +4,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { fetchAllChats } from "../../actions/chats";
 import { Fragment } from "react/jsx-runtime";
 import ChatCard, { ChatCardData } from "./ChatCard";
-import { Activity, ReactNode } from "react";
+import { ReactNode } from "react";
 import PaginationEnd from "../Pagination/PaginationEnd";
 import ErrorMessage from "../utils/ErrorMessage";
 import HintMessage from "../utils/HintMessage";

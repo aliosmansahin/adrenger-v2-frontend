@@ -1,26 +1,59 @@
 "use client";
 
-import { fetchRoom } from "@/app/actions/chats";
-import { ChatCardData } from "./ChatCard";
+import { deleteRoom, fetchRoom, leaveRoom } from "@/app/actions/chats";
 import HintMessage from "../utils/HintMessage";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import ErrorMessage from "../utils/ErrorMessage";
-import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import UnfilledButton from "../utils/UnfilledButton";
+import OptionMenuWithButton from "../utils/OptionMenu/OptionMenuWithButton";
+import OptionMenuOption from "../utils/OptionMenu/OptionMenuOption";
+import { useRouter } from "next/navigation";
+
+export interface ChatData {
+  roomId: number;
+  role: "admin" | "member";
+  name: string;
+  createdAt: Date;
+  createdBy: {
+    nickname: string;
+  };
+  createdById: number;
+}
 
 interface Props {
   roomId: number;
 }
 
 function ChatHeader({ roomId }: Props) {
+  const queryClient = useQueryClient();
+  const router = useRouter();
+
   const {
     data: room,
     isLoading,
     error,
-  } = useQuery<ChatCardData, Error>({
+  } = useQuery<ChatData, Error>({
     queryKey: ["chats", roomId],
     queryFn: () => fetchRoom({ roomId }),
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: deleteRoom,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["chats"] });
+      queryClient.cancelQueries({ queryKey: ["chats", roomId] });
+
+      router.replace("/");
+    },
+  });
+
+  const leaveMutation = useMutation({
+    mutationFn: leaveRoom,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["chats"] });
+      queryClient.cancelQueries({ queryKey: ["chats", roomId] });
+
+      router.replace("/");
+    },
   });
 
   let content = null;
@@ -31,9 +64,40 @@ function ChatHeader({ roomId }: Props) {
     content = (
       <div className="w-full flex justify-between items-center">
         <span>{room.name}</span>
-        <UnfilledButton className="text-white">
-          <FontAwesomeIcon icon={faEllipsisVertical} />
-        </UnfilledButton>
+        <OptionMenuWithButton>
+          {(menuObject) => (
+            <>
+              <OptionMenuOption
+                content="Room Info"
+                onClick={() => {
+                  menuObject.closeMenu();
+                }}
+              />
+              <OptionMenuOption
+                content="Joined Users"
+                onClick={() => {
+                  menuObject.closeMenu();
+                }}
+              />
+              <OptionMenuOption
+                content="Leave Room"
+                onClick={() => {
+                  leaveMutation.mutate({ id: roomId });
+                  menuObject.closeMenu();
+                }}
+              />
+              {room.role === "admin" && (
+                <OptionMenuOption
+                  content="Delete Room"
+                  onClick={() => {
+                    menuObject.closeMenu();
+                    deleteMutation.mutate({ id: roomId });
+                  }}
+                />
+              )}
+            </>
+          )}
+        </OptionMenuWithButton>
       </div>
     );
 

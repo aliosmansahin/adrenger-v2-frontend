@@ -1,4 +1,3 @@
-import InputField from "../utils/InputField";
 import InputWithLabel from "../utils/InputWithLabel";
 
 function EmailAndPassword() {
