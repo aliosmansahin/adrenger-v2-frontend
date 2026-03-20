@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import OptionMenuOption from "../utils/OptionMenu/OptionMenuOption";
 import OptionMenuWithButton from "../utils/OptionMenu/OptionMenuWithButton";
 import { MenuObject } from "../utils/OptionMenu/OptionMenu";
+import { signout } from "@/app/actions/auth";
 
 function ChatsHeader() {
   const router = useRouter();
@@ -23,7 +24,10 @@ function ChatsHeader() {
             />
             <OptionMenuOption
               content="Sign Out"
-              onClick={() => menuObject.closeMenu()}
+              onClick={() => {
+                menuObject.closeMenu();
+                signout();
+              }}
             />
           </>
         )}
