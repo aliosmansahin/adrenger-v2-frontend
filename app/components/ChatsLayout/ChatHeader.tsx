@@ -60,6 +60,12 @@ function ChatHeader({ roomId }: Props) {
                 }}
               />
               <OptionMenuOption
+                content="Leave Room"
+                onClick={() => {
+                  menuObject.closeMenu();
+                }}
+              />
+              <OptionMenuOption
                 content="Delete Room"
                 onClick={() => {
                   menuObject.closeMenu();
