@@ -1,13 +1,14 @@
 "use client";
 
-import { fetchJoinRoom } from "@/app/actions/chats";
-import { useQuery } from "@tanstack/react-query";
+import { fetchJoinRoom, joinRoom } from "@/app/actions/chats";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ChatCardData } from "../ChatsLayout/ChatCard";
 import HintMessage from "../utils/HintMessage";
 import ErrorMessage from "../utils/ErrorMessage";
 import FilledButton from "../utils/FilledButton";
 import InputWithLabel from "../utils/InputWithLabel";
-import { SubmitEvent } from "react";
+import { startTransition, SubmitEvent, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export interface JoinRoomData {
   id: number;
@@ -19,6 +20,11 @@ export interface JoinRoomData {
 }
 
 function JoinRoomForm({ roomId }: { roomId: number }) {
+  const queryClient = useQueryClient();
+  const router = useRouter();
+
+  const [buttonActive, setButtonActive] = useState(true);
+
   const {
     data: room,
     isLoading,
@@ -28,9 +34,33 @@ function JoinRoomForm({ roomId }: { roomId: number }) {
     queryFn: () => fetchJoinRoom({ roomId }),
   });
 
+  const mutation = useMutation({
+    mutationFn: joinRoom,
+    onSuccess: (id: string) => {
+      queryClient.invalidateQueries({
+        queryKey: ["chats"],
+      });
+
+      router.replace(`/room/${id}`);
+    },
+    onError: () => {},
+  });
+
   const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+
+    const roomPassword = formData.get("room-password") as string;
+
+    startTransition(() => {
+      mutation.mutate({ id: roomId, password: roomPassword });
+    });
   };
+
+  useEffect(() => {
+    if (mutation.isPending) setButtonActive(false);
+  }, [mutation.isPending]);
 
   let content = null;
 
@@ -44,7 +74,7 @@ function JoinRoomForm({ roomId }: { roomId: number }) {
             <span className="italic">Join room: </span>
             {room.name}
           </span>
-          {!room.hasPassword && (
+          {room.hasPassword && (
             <InputWithLabel
               label="Room Password"
               placeholder="Enter room password"
@@ -53,7 +83,13 @@ function JoinRoomForm({ roomId }: { roomId: number }) {
               type="password"
             />
           )}
-          <FilledButton type="submit">JOIN ROOM</FilledButton>
+          <FilledButton type="submit" disabled={!buttonActive}>
+            {buttonActive
+              ? "JOIN ROOM"
+              : mutation.isPending
+                ? "Joining room"
+                : "Redirecting to the room"}
+          </FilledButton>
         </div>
       </form>
     );
