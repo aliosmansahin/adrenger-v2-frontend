@@ -43,7 +43,7 @@ function Chats() {
     contentInside = (
       <>
         <ChatsHeader />
-        <div className="flex flex-col mb-4 mt-3">
+        <div className="flex flex-col mb-4 mt-3 gap-1">
           {chats.pages.map((page, index) => (
             <Fragment key={index}>
               {page.map((chat: ChatCardData, index: number) => (
