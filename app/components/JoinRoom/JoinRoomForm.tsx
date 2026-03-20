@@ -60,6 +60,7 @@ function JoinRoomForm({ roomId }: { roomId: number }) {
 
   useEffect(() => {
     if (mutation.isPending) setButtonActive(false);
+    else if (mutation.isError) setButtonActive(true);
   }, [mutation.isPending]);
 
   let content = null;

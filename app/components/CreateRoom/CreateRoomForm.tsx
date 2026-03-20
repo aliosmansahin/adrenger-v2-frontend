@@ -27,6 +27,7 @@ function CreateRoomForm() {
 
   useEffect(() => {
     if (mutation.isPending) setButtonActive(false);
+    else if (mutation.isError) setButtonActive(true);
   }, [mutation.isPending]);
 
   const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
