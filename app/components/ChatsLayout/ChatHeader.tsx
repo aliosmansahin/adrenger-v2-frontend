@@ -1,13 +1,23 @@
 "use client";
 
 import { deleteRoom, fetchRoom, leaveRoom } from "@/app/actions/chats";
-import { ChatCardData } from "./ChatCard";
 import HintMessage from "../utils/HintMessage";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import ErrorMessage from "../utils/ErrorMessage";
 import OptionMenuWithButton from "../utils/OptionMenu/OptionMenuWithButton";
 import OptionMenuOption from "../utils/OptionMenu/OptionMenuOption";
 import { useRouter } from "next/navigation";
+
+export interface ChatData {
+  roomId: number;
+  role: "admin" | "member";
+  name: string;
+  createdAt: Date;
+  createdBy: {
+    nickname: string;
+  };
+  createdById: number;
+}
 
 interface Props {
   roomId: number;
@@ -21,7 +31,7 @@ function ChatHeader({ roomId }: Props) {
     data: room,
     isLoading,
     error,
-  } = useQuery<ChatCardData, Error>({
+  } = useQuery<ChatData, Error>({
     queryKey: ["chats", roomId],
     queryFn: () => fetchRoom({ roomId }),
   });
@@ -76,13 +86,15 @@ function ChatHeader({ roomId }: Props) {
                   menuObject.closeMenu();
                 }}
               />
-              <OptionMenuOption
-                content="Delete Room"
-                onClick={() => {
-                  menuObject.closeMenu();
-                  deleteMutation.mutate({ id: roomId });
-                }}
-              />
+              {room.role === "admin" && (
+                <OptionMenuOption
+                  content="Delete Room"
+                  onClick={() => {
+                    menuObject.closeMenu();
+                    deleteMutation.mutate({ id: roomId });
+                  }}
+                />
+              )}
             </>
           )}
         </OptionMenuWithButton>
