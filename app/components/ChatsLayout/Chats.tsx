@@ -42,8 +42,7 @@ function Chats() {
   else {
     contentInside = (
       <>
-        <ChatsHeader />
-        <div className="flex flex-col mb-4 mt-3">
+        <div className="flex flex-col mt-3 pb-3 gap-1 overflow-auto">
           {chats.pages.map((page, index) => (
             <Fragment key={index}>
               {page.map((chat: ChatCardData, index: number) => (
@@ -51,20 +50,23 @@ function Chats() {
               ))}
             </Fragment>
           ))}
+          <PaginationEnd
+            show={!isLoading}
+            isFetchingNextPage={isFetchingNextPage}
+            error={error?.message}
+            hasNextPage={hasNextPage}
+            onLoadMore={() => fetchNextPage()}
+          />
         </div>
-        <PaginationEnd
-          show={!isLoading}
-          isFetchingNextPage={isFetchingNextPage}
-          error={error?.message}
-          hasNextPage={hasNextPage}
-          onLoadMore={() => fetchNextPage()}
-        />
       </>
     );
   }
 
   return (
-    <div className="hidden sm:block sm:max-w-75 w-4/12 p-2">
+    <div className="hidden sm:flex sm:flex-col sm:max-w-75 w-4/12 p-2 sm:max-h-150">
+      <div>
+        <ChatsHeader />
+      </div>
       {contentInside}
     </div>
   );

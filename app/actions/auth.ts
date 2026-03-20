@@ -3,6 +3,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import axios from "axios";
+import { api } from "../lib/axios";
 
 export async function login(initialState: any, formData: FormData) {
     const rawFormData = {
@@ -104,4 +105,29 @@ export async function signup(initialState: any, formData: FormData) {
 
 
     redirect("/");
+}
+
+export async function signout() {
+    try {
+        const cookieStore = await cookies();
+
+        const res = await api.post(`/auth/logout`, {}, {
+            headers: {
+                Cookie: cookieStore.toString(),
+            }
+        });
+
+        if(res.status !== 204) {
+            throw new Error("response_not_204");
+        }
+
+        cookieStore.delete("access_token");
+        cookieStore.delete("refresh_token");
+    }
+    catch(error: any) {
+        console.error(`An error occurred: ${error}`);
+        return;
+    }
+
+    redirect("/login");
 }
