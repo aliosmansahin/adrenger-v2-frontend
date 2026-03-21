@@ -1,3 +1,4 @@
+import { useMenu } from "@/app/context/MenuContext";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
@@ -10,6 +11,8 @@ export interface ChatCardData {
 
 function ChatCard({ roomId, role, name, lastMessage }: ChatCardData) {
   const { slug } = useParams();
+
+  const { toggleMenu } = useMenu();
 
   const cardContent = (
     <div className="not-last:border-b not-last:pb-2 not-first:pt-2">
@@ -28,6 +31,9 @@ function ChatCard({ roomId, role, name, lastMessage }: ChatCardData) {
     return (
       <Link
         href={`/room/${roomId}`}
+        onClick={() => {
+          toggleMenu();
+        }}
         className="hover:bg-gray-800 active:bg-gray-700 px-3 py-2 rounded-4xl"
       >
         {cardContent}
