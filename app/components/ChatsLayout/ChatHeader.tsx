@@ -7,6 +7,7 @@ import ErrorMessage from "../utils/ErrorMessage";
 import OptionMenuWithButton from "../utils/OptionMenu/OptionMenuWithButton";
 import OptionMenuOption from "../utils/OptionMenu/OptionMenuOption";
 import { useRouter } from "next/navigation";
+import MenuToggle from "../Menu/MenuToggle";
 
 export interface ChatData {
   roomId: number;
@@ -63,7 +64,12 @@ function ChatHeader({ roomId }: Props) {
   else
     content = (
       <div className="w-full flex justify-between items-center">
-        <span>{room.name}</span>
+        <span className="flex gap-5">
+          <span className="inline sm:hidden">
+            <MenuToggle />
+          </span>
+          {room.name}
+        </span>
         <OptionMenuWithButton>
           {(menuObject) => (
             <>
