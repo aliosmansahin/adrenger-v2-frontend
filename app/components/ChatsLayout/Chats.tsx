@@ -9,6 +9,7 @@ import PaginationEnd from "../Pagination/PaginationEnd";
 import ErrorMessage from "../utils/ErrorMessage";
 import HintMessage from "../utils/HintMessage";
 import ChatsHeader from "./ChatsHeader";
+import { useMenu } from "@/app/context/MenuContext";
 
 function Chats() {
   const {
@@ -29,6 +30,8 @@ function Chats() {
       return lastPage[lastPage.length - 1].roomId;
     },
   });
+
+  const { menuOpen } = useMenu();
 
   let contentInside: ReactNode = null;
 
@@ -63,7 +66,9 @@ function Chats() {
   }
 
   return (
-    <div className="hidden sm:flex sm:flex-col sm:max-w-75 w-4/12 p-2 sm:max-h-150">
+    <div
+      className={`${menuOpen ? "not-sm:flex not-sm:flex-col" : "not-sm:hidden"} sm:flex sm:flex-col sm:max-w-75 p-2 sm:w-4/12 not-sm:w-full sm:max-h-150`}
+    >
       <div>
         <ChatsHeader />
       </div>
