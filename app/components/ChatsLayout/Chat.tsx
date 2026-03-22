@@ -4,9 +4,12 @@ import { ChatPage, useChatPages } from "@/app/context/ChatPagesContext";
 import MessagesWithInputContainer from "../MessagesLayout/MessagesWithInputContainer";
 import ChatHeader from "./ChatHeader";
 import PageHeader from "../Pages/PageHeader";
+import UnfilledButton from "../utils/UnfilledButton";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClose } from "@fortawesome/free-solid-svg-icons";
 
 function Chat({ roomId }: { roomId: number }) {
-  const { chatPage } = useChatPages();
+  const { chatPage, changePage } = useChatPages();
 
   return (
     <>
@@ -19,12 +22,26 @@ function Chat({ roomId }: { roomId: number }) {
       <div
         className={`w-full h-full ${chatPage === ChatPage.RoomInfo ? "flex flex-col" : "hidden"}`}
       >
-        <PageHeader text="Room Info" />
+        <PageHeader text="Room Info">
+          <UnfilledButton
+            className="px-2"
+            onClick={() => changePage(ChatPage.Messages)}
+          >
+            <FontAwesomeIcon icon={faClose} />
+          </UnfilledButton>
+        </PageHeader>
       </div>
       <div
         className={`w-full h-full ${chatPage === ChatPage.Users ? "flex flex-col" : "hidden"}`}
       >
-        <PageHeader text="Users" />
+        <PageHeader text="Users">
+          <UnfilledButton
+            className="px-2"
+            onClick={() => changePage(ChatPage.Messages)}
+          >
+            <FontAwesomeIcon icon={faClose} />
+          </UnfilledButton>
+        </PageHeader>
       </div>
     </>
   );
