@@ -2,7 +2,7 @@
 
 import { createContext, ReactNode, useContext, useState } from "react";
 
-enum ChatPage {
+export enum ChatPage {
   Messages,
   RoomInfo,
   Users,
