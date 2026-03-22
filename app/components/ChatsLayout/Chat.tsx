@@ -7,6 +7,7 @@ import PageHeader from "../Pages/PageHeader";
 import UnfilledButton from "../utils/UnfilledButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
+import RoomInfoContainer from "../RoomInfoLayout/RoomInfoContainer";
 
 function Chat({ roomId }: { roomId: number }) {
   const { chatPage, changePage } = useChatPages();
@@ -30,6 +31,7 @@ function Chat({ roomId }: { roomId: number }) {
             <FontAwesomeIcon icon={faClose} />
           </UnfilledButton>
         </PageHeader>
+        <RoomInfoContainer roomId={roomId} />
       </div>
       <div
         className={`w-full h-full ${chatPage === ChatPage.Users ? "flex flex-col" : "hidden"}`}
