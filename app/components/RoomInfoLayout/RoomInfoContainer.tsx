@@ -1,8 +1,8 @@
 "use client";
 
-import { fetchRoom } from "@/app/actions/chats";
+import { editRoom, fetchRoom } from "@/app/actions/chats";
 import { ChatData } from "../ChatsLayout/ChatHeader";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import HintMessage from "../utils/HintMessage";
 import ErrorMessage from "../utils/ErrorMessage";
 import UnfilledButton from "../utils/UnfilledButton";
@@ -23,18 +23,36 @@ function RoomInfoContainer({ roomId }: { roomId: number }) {
     queryFn: () => fetchRoom({ roomId }),
   });
 
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: editRoom,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["chats", roomId] });
+      queryClient.invalidateQueries({ queryKey: ["chats"] }); //To invalidate chats menu
+
+      setEditOpened(false);
+    },
+  });
+
   const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
-    const roomName = formData.get("room-name");
-    const roomCurrentPassword = formData.get("room-current-password");
-    const roomNewPassword = formData.get("room-new-password");
-
-    console.log(roomName, roomCurrentPassword, roomNewPassword);
+    const roomName = formData.get("room-name") as string;
+    const roomCurrentPassword = formData.get("room-current-password") as
+      | string
+      | null;
+    const roomNewPassword = formData.get("room-new-password") as string | null;
 
     startTransition(() => {
-      //TODO: Add server action here
+      mutation.mutate({
+        id: roomId,
+        name: roomName,
+        changePassword,
+        currentPassword: roomCurrentPassword,
+        newPassword: roomNewPassword,
+      });
     });
   };
 
