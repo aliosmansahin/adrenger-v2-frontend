@@ -68,8 +68,12 @@ function RoomInfoContainer({ roomId }: { roomId: number }) {
             <form onSubmit={handleSubmit} className="flex flex-col gap-3">
               <div className="flex [&>button]:p-3 gap-2">
                 {showSaveButton && (
-                  <UnfilledButton className="text-start" type="submit">
-                    Save
+                  <UnfilledButton
+                    className="text-start"
+                    type="submit"
+                    disabled={mutation.isPending}
+                  >
+                    {mutation.isPending ? "Saving" : "Save"}
                   </UnfilledButton>
                 )}
                 <UnfilledButton
@@ -121,6 +125,9 @@ function RoomInfoContainer({ roomId }: { roomId: number }) {
                 >
                   Change Room Password
                 </UnfilledButton>
+              )}
+              {mutation.isError && (
+                <ErrorMessage message={mutation.error.message} />
               )}
             </form>
           </>
