@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import HintMessage from "../utils/HintMessage";
 import ErrorMessage from "../utils/ErrorMessage";
 import UnfilledButton from "../utils/UnfilledButton";
-import { useState } from "react";
+import { startTransition, SubmitEvent, useState } from "react";
 import InputWithLabel from "../utils/InputWithLabel";
 
 function RoomInfoContainer({ roomId }: { roomId: number }) {
@@ -23,6 +23,21 @@ function RoomInfoContainer({ roomId }: { roomId: number }) {
     queryFn: () => fetchRoom({ roomId }),
   });
 
+  const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+    const roomName = formData.get("room-name");
+    const roomCurrentPassword = formData.get("room-current-password");
+    const roomNewPassword = formData.get("room-new-password");
+
+    console.log(roomName, roomCurrentPassword, roomNewPassword);
+
+    startTransition(() => {
+      //TODO: Add server action here
+    });
+  };
+
   let content = null;
 
   if (isLoading || !room) content = <HintMessage message="Loading room data" />;
@@ -32,7 +47,7 @@ function RoomInfoContainer({ roomId }: { roomId: number }) {
       <div className="flex flex-col gap-3 [&>span>span]:font-bold [&>span>span]:italic">
         {editOpened ? (
           <>
-            <form action="" className="flex flex-col gap-3">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-3">
               <div className="flex [&>button]:p-3 gap-2">
                 {showSaveButton && (
                   <UnfilledButton className="text-start" type="submit">
@@ -52,6 +67,8 @@ function RoomInfoContainer({ roomId }: { roomId: number }) {
                 defaultValue={room.name}
                 required
                 placeholder="Enter a room name"
+                id="room-name-input"
+                name="room-name"
                 className="mb-2"
                 onChange={() => setShowSaveButton(true)}
               />
@@ -60,11 +77,15 @@ function RoomInfoContainer({ roomId }: { roomId: number }) {
                 <>
                   <InputWithLabel
                     label="Current Password"
+                    id="room-current-password-input"
+                    name="room-current-password"
                     placeholder="Enter current password of the room"
                     onChange={() => setShowSaveButton(true)}
                   />
                   <InputWithLabel
                     label="New Password"
+                    id="room-new-password-input"
+                    name="room-new-password"
                     placeholder="Enter new password"
                     onChange={() => setShowSaveButton(true)}
                   />
