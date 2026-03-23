@@ -20,9 +20,25 @@ function RoomInfoContainer({ roomId }: { roomId: number }) {
 
   if (isLoading || !room) content = <HintMessage message="Loading room data" />;
   else if (error) content = <ErrorMessage message={error.message} />;
-  else content = <div>RoomInfoContainer</div>;
+  else
+    content = (
+      <div className="flex flex-col gap-3 [&>span>span]:font-bold [&>span>span]:italic">
+        <span>
+          <span>Room Name:</span> {room.name}
+        </span>
+        <span>
+          <span>Your Role:</span> {room.role}
+        </span>
+        <span>
+          <span>Room creator:</span> {room.createdBy.nickname}
+        </span>
+        <span>
+          <span>Create time:</span> {room.createdAt.toLocaleString()}
+        </span>
+      </div>
+    );
 
-  return <div>{content}</div>;
+  return <div className="p-3 text-[18px]">{content}</div>;
 }
 
 export default RoomInfoContainer;
