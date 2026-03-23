@@ -7,10 +7,12 @@ import HintMessage from "../utils/HintMessage";
 import ErrorMessage from "../utils/ErrorMessage";
 import UnfilledButton from "../utils/UnfilledButton";
 import { useState } from "react";
+import InputWithLabel from "../utils/InputWithLabel";
 
 function RoomInfoContainer({ roomId }: { roomId: number }) {
-  const [editOpened, setEditOpened] = useState(false);
   const [showSaveButton, setShowSaveButton] = useState(false);
+  const [editOpened, setEditOpened] = useState(false);
+  const [changePassword, setChangePassword] = useState(false);
 
   const {
     data: room,
@@ -30,28 +32,68 @@ function RoomInfoContainer({ roomId }: { roomId: number }) {
       <div className="flex flex-col gap-3 [&>span>span]:font-bold [&>span>span]:italic">
         {editOpened ? (
           <>
-            <div className="flex [&>button]:p-3 gap-2">
-              {showSaveButton && (
+            <form action="" className="flex flex-col gap-3">
+              <div className="flex [&>button]:p-3 gap-2">
+                {showSaveButton && (
+                  <UnfilledButton className="text-start" type="submit">
+                    Save
+                  </UnfilledButton>
+                )}
                 <UnfilledButton
                   className="text-start"
+                  type="reset"
                   onClick={() => setEditOpened(false)}
                 >
-                  Save
+                  Cancel
+                </UnfilledButton>
+              </div>
+              <InputWithLabel
+                label="Room Name"
+                defaultValue={room.name}
+                required
+                placeholder="Enter a room name"
+                className="mb-2"
+                onChange={() => setShowSaveButton(true)}
+              />
+              <div className="border-b " />
+              {changePassword ? (
+                <>
+                  <InputWithLabel
+                    label="Current Password"
+                    placeholder="Enter current password of the room"
+                    onChange={() => setShowSaveButton(true)}
+                  />
+                  <InputWithLabel
+                    label="New Password"
+                    placeholder="Enter new password"
+                    onChange={() => setShowSaveButton(true)}
+                  />
+                  <UnfilledButton
+                    type="button"
+                    onClick={() => setChangePassword(false)}
+                  >
+                    Cancel Password Changing
+                  </UnfilledButton>
+                </>
+              ) : (
+                <UnfilledButton
+                  type="button"
+                  onClick={() => setChangePassword(true)}
+                >
+                  Change Room Password
                 </UnfilledButton>
               )}
-              <UnfilledButton
-                className="text-start"
-                onClick={() => setEditOpened(false)}
-              >
-                Cancel
-              </UnfilledButton>
-            </div>
+            </form>
           </>
         ) : (
           <>
             <UnfilledButton
               className="text-start p-3"
-              onClick={() => setEditOpened(true)}
+              onClick={() => {
+                setShowSaveButton(false);
+                setChangePassword(false);
+                setEditOpened(true);
+              }}
             >
               Edit Room
             </UnfilledButton>
