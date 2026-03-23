@@ -8,6 +8,7 @@ import OptionMenuWithButton from "../utils/OptionMenu/OptionMenuWithButton";
 import OptionMenuOption from "../utils/OptionMenu/OptionMenuOption";
 import { useRouter } from "next/navigation";
 import MenuToggle from "../Menu/MenuToggle";
+import { ChatPage, useChatPages } from "@/app/context/ChatPagesContext";
 
 export interface ChatData {
   roomId: number;
@@ -27,6 +28,8 @@ interface Props {
 function ChatHeader({ roomId }: Props) {
   const queryClient = useQueryClient();
   const router = useRouter();
+
+  const { changePage } = useChatPages();
 
   const {
     data: room,
@@ -77,12 +80,14 @@ function ChatHeader({ roomId }: Props) {
                 content="Room Info"
                 onClick={() => {
                   menuObject.closeMenu();
+                  changePage(ChatPage.RoomInfo);
                 }}
               />
               <OptionMenuOption
                 content="Joined Users"
                 onClick={() => {
                   menuObject.closeMenu();
+                  changePage(ChatPage.Users);
                 }}
               />
               <OptionMenuOption

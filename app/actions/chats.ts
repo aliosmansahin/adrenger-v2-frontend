@@ -149,3 +149,33 @@ export async function leaveRoom({id}: {id: number}) {
 
     return result.data;
 }
+
+export async function editRoom({id, name, changePassword, currentPassword, newPassword}: {id: number, name: string, changePassword: boolean, currentPassword: string | null, newPassword: string | null}) {
+    const rawFormData = {
+        id,
+        name,
+        changePassword,
+        currentPassword,
+        newPassword
+    };
+
+    const cookieStore = await cookies();
+
+    const result = await api.put(`/rooms/${id}`,
+        rawFormData,
+        {
+            headers: {
+                Cookie: cookieStore.toString()
+            }
+        }
+    );
+
+    if(result.status !== 200) {
+        console.log(`An error occurred: ${result.data}`);
+        throw new Error(result.data);
+    }
+
+    const roomData = result.data;
+
+    return roomData.id;
+}
