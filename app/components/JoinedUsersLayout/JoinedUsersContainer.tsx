@@ -73,24 +73,27 @@ function JoinedUsersContainer({ roomId }: { roomId: number }) {
                   className="px-5 py-2 bg-gray-600 rounded-4xl flex justify-between"
                 >
                   <span>{user.user.nickname}</span>
-                  <OptionMenuWithButton>
-                    {(menuObject: MenuObject) => (
-                      <>
-                        <OptionMenuOption
-                          content="Kick"
-                          onClick={() => {
-                            menuObject.closeMenu();
-                          }}
-                        />
-                        <OptionMenuOption
-                          content="Promote to admin"
-                          onClick={() => {
-                            menuObject.closeMenu();
-                          }}
-                        />
-                      </>
-                    )}
-                  </OptionMenuWithButton>
+                  <span>
+                    <span className="text-red-400 pr-3">{user.role}</span>
+                    <OptionMenuWithButton>
+                      {(menuObject: MenuObject) => (
+                        <>
+                          <OptionMenuOption
+                            content="Kick"
+                            onClick={() => {
+                              menuObject.closeMenu();
+                            }}
+                          />
+                          <OptionMenuOption
+                            content="Promote to admin"
+                            onClick={() => {
+                              menuObject.closeMenu();
+                            }}
+                          />
+                        </>
+                      )}
+                    </OptionMenuWithButton>
+                  </span>
                 </div>
               ))}
             </Fragment>
