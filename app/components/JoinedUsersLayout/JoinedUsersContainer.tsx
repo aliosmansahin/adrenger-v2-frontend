@@ -1,7 +1,17 @@
 "use client";
 
-import { fetchJoinedUsers } from "@/app/actions/users";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import {
+  depromoteMyself,
+  fetchJoinedUsers,
+  kickUser,
+  promoteUser,
+} from "@/app/actions/users";
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { Fragment, ReactNode } from "react";
 import HintMessage from "../utils/HintMessage";
 import ErrorMessage from "../utils/ErrorMessage";
@@ -22,6 +32,8 @@ export interface User {
 }
 
 function JoinedUsersContainer({ roomId }: { roomId: number }) {
+  const queryClient = useQueryClient();
+
   const roomQuery = useQuery<ChatData, Error>({
     queryKey: ["chats", roomId],
     queryFn: () => fetchRoom({ roomId }),
@@ -43,6 +55,27 @@ function JoinedUsersContainer({ roomId }: { roomId: number }) {
       if (lastPage.length < 10) return undefined;
 
       return lastPage[lastPage.length - 1].user.userId;
+    },
+  });
+
+  const kickMutation = useMutation({
+    mutationFn: kickUser,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["chats", roomId, "users"] });
+    },
+  });
+
+  const promoteMutation = useMutation({
+    mutationFn: promoteUser,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["chats", roomId, "users"] });
+    },
+  });
+
+  const depromoteMyselfMutation = useMutation({
+    mutationFn: depromoteMyself,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["chats", roomId, "users"] });
     },
   });
 
@@ -86,6 +119,27 @@ function JoinedUsersContainer({ roomId }: { roomId: number }) {
                   </span>
                   <span>
                     <span className="text-red-400 pr-3">{user.role}</span>
+                    {/* My options */}
+                    {pageIndex === 0 &&
+                      userIndex === 0 &&
+                      me.role === "admin" && (
+                        <OptionMenuWithButton>
+                          {(menuObject: MenuObject) => (
+                            <>
+                              <OptionMenuOption
+                                content="Depromote Myself"
+                                onClick={() => {
+                                  menuObject.closeMenu();
+                                  depromoteMyselfMutation.mutate({
+                                    roomId,
+                                  });
+                                }}
+                              />
+                            </>
+                          )}
+                        </OptionMenuWithButton>
+                      )}
+                    {/* Other users options  */}
                     {user.role === "member" &&
                     me.role === "admin" &&
                     !(pageIndex === 0 && userIndex === 0) ? (
@@ -96,12 +150,20 @@ function JoinedUsersContainer({ roomId }: { roomId: number }) {
                               content="Kick"
                               onClick={() => {
                                 menuObject.closeMenu();
+                                kickMutation.mutate({
+                                  roomId,
+                                  userId: user.user.userId,
+                                });
                               }}
                             />
                             <OptionMenuOption
                               content="Promote to admin"
                               onClick={() => {
                                 menuObject.closeMenu();
+                                promoteMutation.mutate({
+                                  roomId,
+                                  userId: user.user.userId,
+                                });
                               }}
                             />
                           </>

@@ -24,3 +24,63 @@ export async function fetchJoinedUsers({roomId, pageParam} : {roomId: number, pa
 
     return result.data;
 }
+
+export async function kickUser({roomId, userId}: {roomId: number, userId: number}) {
+    const cookieStore = await cookies();
+
+    const result = await api.post(`/rooms/${roomId}/kick/${userId}`,
+        {},
+        {
+            headers: {
+                Cookie: cookieStore.toString(),
+            },
+        }
+    );
+
+    if(result.status !== 200) {
+        console.log(`An error occurred: ${result.data}`);
+        throw new Error(result.data);
+    }
+
+    //Return nothing
+}
+
+export async function promoteUser({roomId, userId}: {roomId: number, userId: number}) {
+    const cookieStore = await cookies();
+
+    const result = await api.put(`/rooms/${roomId}/promote/${userId}`,
+        {},
+        {
+            headers: {
+                Cookie: cookieStore.toString(),
+            },
+        }
+    );
+
+    if(result.status !== 200) {
+        console.log(`An error occurred: ${result.data}`);
+        throw new Error(result.data);
+    }
+
+    return result.data;
+}
+
+export async function depromoteMyself({roomId}: {roomId: number}) {
+    const cookieStore = await cookies();
+
+    const result = await api.put(`/rooms/${roomId}/depromote-myself`,
+        {},
+        {
+            headers: {
+                Cookie: cookieStore.toString(),
+            },
+        }
+    );
+
+    if(result.status !== 200) {
+        console.log(`An error occurred: ${result.data}`);
+        throw new Error(result.data);
+    }
+
+    return result.data;
+}
