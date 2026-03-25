@@ -48,6 +48,8 @@ function JoinedUsersContainer({ roomId }: { roomId: number }) {
 
   let contentInside: ReactNode = null;
 
+  const me = users?.pages[0][0]!;
+
   /* Admin data check */
   if (roomQuery.isLoading || !roomQuery.data)
     contentInside = <HintMessage message="Loading room data" />;
@@ -65,34 +67,47 @@ function JoinedUsersContainer({ roomId }: { roomId: number }) {
     else {
       contentInside = (
         <div className="flex flex-col gap-1">
-          {users.pages.map((page, index) => (
-            <Fragment key={index}>
-              {page.map((user, index) => (
+          {users.pages.map((page, pageIndex) => (
+            <Fragment key={pageIndex}>
+              {page.map((user, userIndex) => (
                 <div
-                  key={index}
+                  key={userIndex}
                   className="px-5 py-2 bg-gray-600 rounded-4xl flex justify-between"
                 >
-                  <span>{user.user.nickname}</span>
+                  <span>
+                    <span>{user.user.nickname}</span>
+                    {pageIndex === 0 && userIndex === 0 && (
+                      <span className="italic font-bold"> - You</span>
+                    )}
+                    <span>
+                      <span className="italic font-bold"> - Joined At: </span>{" "}
+                      {user.joinedAt.toLocaleString()}
+                    </span>
+                  </span>
                   <span>
                     <span className="text-red-400 pr-3">{user.role}</span>
-                    <OptionMenuWithButton>
-                      {(menuObject: MenuObject) => (
-                        <>
-                          <OptionMenuOption
-                            content="Kick"
-                            onClick={() => {
-                              menuObject.closeMenu();
-                            }}
-                          />
-                          <OptionMenuOption
-                            content="Promote to admin"
-                            onClick={() => {
-                              menuObject.closeMenu();
-                            }}
-                          />
-                        </>
-                      )}
-                    </OptionMenuWithButton>
+                    {user.role === "member" &&
+                    me.role === "admin" &&
+                    !(pageIndex === 0 && userIndex === 0) ? (
+                      <OptionMenuWithButton>
+                        {(menuObject: MenuObject) => (
+                          <>
+                            <OptionMenuOption
+                              content="Kick"
+                              onClick={() => {
+                                menuObject.closeMenu();
+                              }}
+                            />
+                            <OptionMenuOption
+                              content="Promote to admin"
+                              onClick={() => {
+                                menuObject.closeMenu();
+                              }}
+                            />
+                          </>
+                        )}
+                      </OptionMenuWithButton>
+                    ) : null}
                   </span>
                 </div>
               ))}
