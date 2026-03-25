@@ -1,6 +1,11 @@
 "use client";
 
-import { fetchJoinedUsers, kickUser, promoteUser } from "@/app/actions/users";
+import {
+  depromoteMyself,
+  fetchJoinedUsers,
+  kickUser,
+  promoteUser,
+} from "@/app/actions/users";
 import {
   useInfiniteQuery,
   useMutation,
@@ -67,6 +72,13 @@ function JoinedUsersContainer({ roomId }: { roomId: number }) {
     },
   });
 
+  const depromoteMyselfMutation = useMutation({
+    mutationFn: depromoteMyself,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["chats", roomId, "users"] });
+    },
+  });
+
   let contentInside: ReactNode = null;
 
   const me = users?.pages[0][0]!;
@@ -107,6 +119,27 @@ function JoinedUsersContainer({ roomId }: { roomId: number }) {
                   </span>
                   <span>
                     <span className="text-red-400 pr-3">{user.role}</span>
+                    {/* My options */}
+                    {pageIndex === 0 &&
+                      userIndex === 0 &&
+                      me.role === "admin" && (
+                        <OptionMenuWithButton>
+                          {(menuObject: MenuObject) => (
+                            <>
+                              <OptionMenuOption
+                                content="Depromote Myself"
+                                onClick={() => {
+                                  menuObject.closeMenu();
+                                  depromoteMyselfMutation.mutate({
+                                    roomId,
+                                  });
+                                }}
+                              />
+                            </>
+                          )}
+                        </OptionMenuWithButton>
+                      )}
+                    {/* Other users options  */}
                     {user.role === "member" &&
                     me.role === "admin" &&
                     !(pageIndex === 0 && userIndex === 0) ? (
