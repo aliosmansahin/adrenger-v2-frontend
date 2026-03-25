@@ -156,7 +156,7 @@ function RoomInfoContainer({ roomId }: { roomId: number }) {
               <span>Room creator:</span> {room.createdBy.nickname}
             </span>
             <span>
-              <span>Create time:</span> {room.createdAt.toLocaleString()}
+              <span>Create time:</span> {room.createdAt?.toLocaleString()}
             </span>
             <span className="flex items-center gap-3">
               <InputWithLabel
