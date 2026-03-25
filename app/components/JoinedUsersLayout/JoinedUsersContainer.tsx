@@ -1,7 +1,12 @@
 "use client";
 
-import { fetchJoinedUsers } from "@/app/actions/users";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { fetchJoinedUsers, kickUser } from "@/app/actions/users";
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { Fragment, ReactNode } from "react";
 import HintMessage from "../utils/HintMessage";
 import ErrorMessage from "../utils/ErrorMessage";
@@ -22,6 +27,8 @@ export interface User {
 }
 
 function JoinedUsersContainer({ roomId }: { roomId: number }) {
+  const queryClient = useQueryClient();
+
   const roomQuery = useQuery<ChatData, Error>({
     queryKey: ["chats", roomId],
     queryFn: () => fetchRoom({ roomId }),
@@ -43,6 +50,13 @@ function JoinedUsersContainer({ roomId }: { roomId: number }) {
       if (lastPage.length < 10) return undefined;
 
       return lastPage[lastPage.length - 1].user.userId;
+    },
+  });
+
+  const kickMutation = useMutation({
+    mutationFn: kickUser,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["chats", roomId, "users"] });
     },
   });
 
@@ -96,6 +110,10 @@ function JoinedUsersContainer({ roomId }: { roomId: number }) {
                               content="Kick"
                               onClick={() => {
                                 menuObject.closeMenu();
+                                kickMutation.mutate({
+                                  roomId,
+                                  userId: user.user.userId,
+                                });
                               }}
                             />
                             <OptionMenuOption
