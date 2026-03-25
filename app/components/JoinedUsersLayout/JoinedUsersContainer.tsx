@@ -1,6 +1,6 @@
 "use client";
 
-import { fetchJoinedUsers, kickUser } from "@/app/actions/users";
+import { fetchJoinedUsers, kickUser, promoteUser } from "@/app/actions/users";
 import {
   useInfiniteQuery,
   useMutation,
@@ -55,6 +55,13 @@ function JoinedUsersContainer({ roomId }: { roomId: number }) {
 
   const kickMutation = useMutation({
     mutationFn: kickUser,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["chats", roomId, "users"] });
+    },
+  });
+
+  const promoteMutation = useMutation({
+    mutationFn: promoteUser,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["chats", roomId, "users"] });
     },
@@ -120,6 +127,10 @@ function JoinedUsersContainer({ roomId }: { roomId: number }) {
                               content="Promote to admin"
                               onClick={() => {
                                 menuObject.closeMenu();
+                                promoteMutation.mutate({
+                                  roomId,
+                                  userId: user.user.userId,
+                                });
                               }}
                             />
                           </>
