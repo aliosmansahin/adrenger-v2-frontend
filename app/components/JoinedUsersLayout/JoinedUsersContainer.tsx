@@ -12,8 +12,13 @@ import OptionMenuOption from "../utils/OptionMenu/OptionMenuOption";
 import { MenuObject } from "../utils/OptionMenu/OptionMenu";
 
 export interface User {
-  nickname: string;
-  id: number;
+  roomId: number;
+  joinedAt: Date;
+  role: "admin" | "member";
+  user: {
+    userId: number;
+    nickname: string;
+  };
 }
 
 function JoinedUsersContainer({ roomId }: { roomId: number }) {
@@ -37,7 +42,7 @@ function JoinedUsersContainer({ roomId }: { roomId: number }) {
     getNextPageParam: (lastPage: User[]) => {
       if (lastPage.length < 10) return undefined;
 
-      return lastPage[lastPage.length - 1].id;
+      return lastPage[lastPage.length - 1].user.userId;
     },
   });
 
@@ -67,7 +72,7 @@ function JoinedUsersContainer({ roomId }: { roomId: number }) {
                   key={index}
                   className="px-5 py-2 bg-gray-600 rounded-4xl flex justify-between"
                 >
-                  <span>{user.nickname}</span>
+                  <span>{user.user.nickname}</span>
                   <OptionMenuWithButton>
                     {(menuObject: MenuObject) => (
                       <>
