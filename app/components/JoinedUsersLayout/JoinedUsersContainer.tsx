@@ -107,7 +107,7 @@ function JoinedUsersContainer({ roomId }: { roomId: number }) {
                   key={userIndex}
                   className="px-5 py-2 bg-gray-600 rounded-4xl flex justify-between"
                 >
-                  <span>
+                  <span className="flex flex-col flex-wrap">
                     <span>{user.user.nickname}</span>
                     {pageIndex === 0 && userIndex === 0 && (
                       <span className="italic font-bold"> - You</span>
@@ -117,7 +117,7 @@ function JoinedUsersContainer({ roomId }: { roomId: number }) {
                       {user.joinedAt.toLocaleString()}
                     </span>
                   </span>
-                  <span>
+                  <span className="flex">
                     <span className="text-red-400 pr-3">{user.role}</span>
                     {/* My options */}
                     {pageIndex === 0 &&
