@@ -13,6 +13,7 @@ function RoomInfoContainer({ roomId }: { roomId: number }) {
   const [showSaveButton, setShowSaveButton] = useState(false);
   const [editOpened, setEditOpened] = useState(false);
   const [changePassword, setChangePassword] = useState(false);
+  const [linkCopied, setLinkCopied] = useState(false);
 
   const {
     data: room,
@@ -156,6 +157,29 @@ function RoomInfoContainer({ roomId }: { roomId: number }) {
             </span>
             <span>
               <span>Create time:</span> {room.createdAt.toLocaleString()}
+            </span>
+            <span className="flex items-center gap-3">
+              <InputWithLabel
+                label="URL to join:"
+                labelClassName="font-bold italic"
+                className="grow"
+                value={`${process.env.NEXT_PUBLIC_HOST}/join/${roomId}`}
+                readOnly
+              />
+              <UnfilledButton
+                className="p-2"
+                onClick={() => {
+                  setLinkCopied(true);
+                  navigator.clipboard.writeText(
+                    `${process.env.NEXT_PUBLIC_HOST}/join/${roomId}`,
+                  );
+
+                  setTimeout(() => setLinkCopied(false), 500);
+                }}
+                disabled={linkCopied}
+              >
+                {linkCopied ? "COPIED" : "COPY"}
+              </UnfilledButton>
             </span>
           </>
         )}
