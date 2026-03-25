@@ -63,7 +63,7 @@ function RoomInfoContainer({ roomId }: { roomId: number }) {
   else
     content = (
       <div className="flex flex-col gap-3 [&>span>span]:font-bold [&>span>span]:italic">
-        {editOpened ? (
+        {editOpened && room.role === "admin" ? (
           <>
             <form onSubmit={handleSubmit} className="flex flex-col gap-3">
               <div className="flex [&>button]:p-3 gap-2">
@@ -133,16 +133,18 @@ function RoomInfoContainer({ roomId }: { roomId: number }) {
           </>
         ) : (
           <>
-            <UnfilledButton
-              className="text-start p-3"
-              onClick={() => {
-                setShowSaveButton(false);
-                setChangePassword(false);
-                setEditOpened(true);
-              }}
-            >
-              Edit Room
-            </UnfilledButton>
+            {room.role === "admin" && (
+              <UnfilledButton
+                className="text-start p-3"
+                onClick={() => {
+                  setShowSaveButton(false);
+                  setChangePassword(false);
+                  setEditOpened(true);
+                }}
+              >
+                Edit Room
+              </UnfilledButton>
+            )}
             <span>
               <span>Room Name:</span> {room.name}
             </span>
