@@ -81,8 +81,6 @@ function JoinedUsersContainer({ roomId }: { roomId: number }) {
 
   let contentInside: ReactNode = null;
 
-  const me = users?.pages[0][0]!;
-
   /* Admin data check */
   if (roomQuery.isLoading || !roomQuery.data)
     contentInside = <HintMessage message="Loading room data" />;
@@ -98,6 +96,8 @@ function JoinedUsersContainer({ roomId }: { roomId: number }) {
       contentInside = <ErrorMessage message={error.message} />;
     else if (isDataEmpty) contentInside = <HintMessage message="No Chats" />;
     else {
+      const me = users.pages[0][0]!;
+
       contentInside = (
         <div className="flex flex-col gap-1">
           {users.pages.map((page, pageIndex) => (
