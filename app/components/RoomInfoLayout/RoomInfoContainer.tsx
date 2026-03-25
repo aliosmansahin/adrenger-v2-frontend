@@ -13,6 +13,7 @@ function RoomInfoContainer({ roomId }: { roomId: number }) {
   const [showSaveButton, setShowSaveButton] = useState(false);
   const [editOpened, setEditOpened] = useState(false);
   const [changePassword, setChangePassword] = useState(false);
+  const [linkCopied, setLinkCopied] = useState(false);
 
   const {
     data: room,
@@ -63,7 +64,7 @@ function RoomInfoContainer({ roomId }: { roomId: number }) {
   else
     content = (
       <div className="flex flex-col gap-3 [&>span>span]:font-bold [&>span>span]:italic">
-        {editOpened ? (
+        {editOpened && room.role === "admin" ? (
           <>
             <form onSubmit={handleSubmit} className="flex flex-col gap-3">
               <div className="flex [&>button]:p-3 gap-2">
@@ -133,16 +134,18 @@ function RoomInfoContainer({ roomId }: { roomId: number }) {
           </>
         ) : (
           <>
-            <UnfilledButton
-              className="text-start p-3"
-              onClick={() => {
-                setShowSaveButton(false);
-                setChangePassword(false);
-                setEditOpened(true);
-              }}
-            >
-              Edit Room
-            </UnfilledButton>
+            {room.role === "admin" && (
+              <UnfilledButton
+                className="text-start p-3"
+                onClick={() => {
+                  setShowSaveButton(false);
+                  setChangePassword(false);
+                  setEditOpened(true);
+                }}
+              >
+                Edit Room
+              </UnfilledButton>
+            )}
             <span>
               <span>Room Name:</span> {room.name}
             </span>
@@ -153,7 +156,30 @@ function RoomInfoContainer({ roomId }: { roomId: number }) {
               <span>Room creator:</span> {room.createdBy.nickname}
             </span>
             <span>
-              <span>Create time:</span> {room.createdAt.toLocaleString()}
+              <span>Create time:</span> {room.createdAt?.toLocaleString()}
+            </span>
+            <span className="flex items-center gap-3">
+              <InputWithLabel
+                label="URL to join:"
+                labelClassName="font-bold italic"
+                className="grow"
+                value={`${process.env.NEXT_PUBLIC_HOST}/join/${roomId}`}
+                readOnly
+              />
+              <UnfilledButton
+                className="p-2"
+                onClick={() => {
+                  setLinkCopied(true);
+                  navigator.clipboard.writeText(
+                    `${process.env.NEXT_PUBLIC_HOST}/join/${roomId}`,
+                  );
+
+                  setTimeout(() => setLinkCopied(false), 500);
+                }}
+                disabled={linkCopied}
+              >
+                {linkCopied ? "COPIED" : "COPY"}
+              </UnfilledButton>
             </span>
           </>
         )}
